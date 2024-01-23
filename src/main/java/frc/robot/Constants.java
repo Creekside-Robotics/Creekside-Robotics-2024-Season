@@ -66,7 +66,7 @@ public final class Constants {
     public static double AbsoluteMaxAngularVelocity = AbsoluteMaxWheelVelocity /
         Math.hypot(wheelBaseLength / 2.0, wheelBaseLength / 2.0);
 
-    public static double driveCurrentLimit = 20.0;
+    public static double driveCurrentLimit = 60.0;
 
     public static double maxTranslationalSpeed = 3.0;
     public static double maxRotationalSpeed = Math.PI;
@@ -76,10 +76,10 @@ public final class Constants {
     public static double rotationControllerPGain = 10.0;
     public static double rotationControllerDGain = 0.5;
 
-    public static double frontLeftEncoderOffset = Math.toRadians(-354.46) + Math.PI;
-    public static double frontRightEncoderOffset = Math.toRadians(-69.87) + Math.PI;
-    public static double backLeftEncoderOffset = Math.toRadians(-212.34);
-    public static double backRightEncoderOffset = Math.toRadians(-312.53);
+    public static double frontLeftEncoderOffset = Math.toRadians(-95.01);
+    public static double frontRightEncoderOffset = Math.toRadians(-184.131) + Math.PI;
+    public static double backLeftEncoderOffset = Math.toRadians(-83.584);
+    public static double backRightEncoderOffset = Math.toRadians(-88.330) + Math.PI;
 
     public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.02, 0.02, Math.PI / 30.0);
     public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.8, 0.8, Math.PI / 2.0);
