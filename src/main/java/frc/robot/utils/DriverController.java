@@ -6,6 +6,7 @@ package frc.robot.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -56,7 +57,12 @@ public class DriverController extends XboxController {
      */
     public ChassisSpeeds getDrivetrainOutput(boolean fieldOriented) {
         double controllerThrottle = 1.0 - this.getRightTriggerAxis();
-        Alliance robotAlliance = (fieldOriented) ? DriverStation.getAlliance() : Alliance.Blue;
+        Alliance robotAlliance;
+        try {
+            robotAlliance = DriverStation.getAlliance().get();
+        } catch (NoSuchElementException e) {
+            robotAlliance = Alliance.Blue;
+        }
 
         switch (robotAlliance) {
             case Blue:

@@ -5,11 +5,11 @@
 package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.DriverController;
 
-public class ManualDrive extends CommandBase {
+public class ManualDrive extends Command {
   private final Drivetrain drivetrain;
   private final DriverController controller;
 

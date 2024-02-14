@@ -5,10 +5,10 @@
 package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
 
-public class SetDrivetrainOutput extends CommandBase {
+public class SetDrivetrainOutput extends Command {
   private final Drivetrain drivetrain;
   private final ChassisSpeeds output;
   private final boolean fieldOriented;

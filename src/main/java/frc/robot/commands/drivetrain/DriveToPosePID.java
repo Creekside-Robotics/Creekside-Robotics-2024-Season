@@ -10,12 +10,12 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.DriverController;
 
-public class DriveToPosePID extends CommandBase {
+public class DriveToPosePID extends Command {
   private PIDController xController = new PIDController(DrivetrainConstants.translationControllerPGain, 0,
       DrivetrainConstants.translationControllerDGain);
   private PIDController yController = new PIDController(DrivetrainConstants.translationControllerPGain, 0,
