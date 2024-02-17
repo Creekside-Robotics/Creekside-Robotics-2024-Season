@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.util.PIDConstants;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.VecBuilder;
@@ -37,8 +36,8 @@ public final class Constants {
    * Use the following format: public static {deviceName} = {IdNumber};
    */
   public static class DeviceIds {
-    public static int frontLeftDrive = 1;
-    public static int frontLeftTurn = 2;
+    public static int frontLeftDrive = 2;
+    public static int frontLeftTurn = 1;
     public static int frontRightDrive = 3;
     public static int frontRightTurn = 4;
     public static int backLeftDrive = 5;
@@ -56,10 +55,10 @@ public final class Constants {
     public static int climberLeft = 17;
     public static int climberRight = 18;
 
-    public static int frontLeftEncoder = 3;
-    public static int frontRightEncoder = 4;
-    public static int backLeftEncoder = 1;
-    public static int backRightEncoder = 2;
+    public static int frontLeftEncoder = 1;
+    public static int frontRightEncoder = 2;
+    public static int backLeftEncoder = 3;
+    public static int backRightEncoder = 4;
 
     public static int driverController = 0;
   }
@@ -83,13 +82,13 @@ public final class Constants {
     public static TrapezoidProfile.Constraints translationConstraints = new Constraints(5, 5);
     public static TrapezoidProfile.Constraints rotationalConstraints = new Constraints(5, 5);
 
-    public static PIDConstants translationPIDConstants = new PIDConstants(5.0, 0.0, 0.0);
-    public static PIDConstants rotationPIDConstants = new PIDConstants(5.0, 0.0, 0.0);
+    public static double translationKP = 5;
+    public static double rotationKP = 5;
 
-    public static double frontLeftEncoderOffset = Math.toRadians(-95.01);
-    public static double frontRightEncoderOffset = Math.toRadians(-184.131) + Math.PI;
-    public static double backLeftEncoderOffset = Math.toRadians(-83.584);
-    public static double backRightEncoderOffset = Math.toRadians(-88.330) + Math.PI;
+    public static double frontLeftEncoderOffset = Math.toRadians(-89.82) - Math.PI / 2.0;
+    public static double frontRightEncoderOffset = Math.toRadians(-180.703) + Math.PI / 2.0;
+    public static double backLeftEncoderOffset = Math.toRadians(-80.069) - Math.PI / 2.0;
+    public static double backRightEncoderOffset = Math.toRadians(-88.330) + Math.PI / 2.0;
 
     public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.02, 0.02, Math.PI / 30.0);
     public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.8, 0.8, Math.PI / 2.0);
@@ -139,7 +138,7 @@ public final class Constants {
 
   public static class ShooterConstants {
     public static double idleVoltage = 4.0;
-    public static double shootingVoltage = 6.0;
+    public static double shootingVoltage = 10;
 
     public static int currentLimit = 20;
   }
@@ -149,7 +148,7 @@ public final class Constants {
     public static double intakeVoltage = 10.0;
     public static double exitVoltage = -10.0;
 
-    public static int currentLimit = 20;
+    public static int currentLimit = 30;
   }
 
   public static class AutoConstants {

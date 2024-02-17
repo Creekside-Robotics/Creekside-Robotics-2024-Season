@@ -10,6 +10,7 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DeviceIds;
@@ -25,17 +26,19 @@ public class Intake extends SubsystemBase {
   private final ColorMatch colorMatcher = new ColorMatch();
   
   public Intake() {
-    leftMotor.setInverted(true);
-    rightMotor.setInverted(true);
+    leftMotor.setInverted(false);
+    rightMotor.setInverted(false);
     leftMotor.setSmartCurrentLimit(IntakeConstants.currentLimit);
     rightMotor.setSmartCurrentLimit(IntakeConstants.currentLimit);
 
     colorMatcher.addColorMatch(Color.kOrange);
+    colorMatcher.setConfidenceThreshold(0.6);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Color", colorSensor.getRawColor().blue);
   }
 
   public void setVoltage(double voltage) {

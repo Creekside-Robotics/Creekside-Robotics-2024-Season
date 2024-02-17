@@ -16,19 +16,19 @@ import frc.robot.utils.DriverController;
 
 public class DriveToPosePID extends Command {
   private ProfiledPIDController xController = new ProfiledPIDController(
-    DrivetrainConstants.translationPIDConstants.kP, 
-    DrivetrainConstants.translationPIDConstants.kI, 
-    DrivetrainConstants.translationPIDConstants.kD, 
+    DrivetrainConstants.translationKP, 
+    0.0, 
+    0.0, 
     DrivetrainConstants.translationConstraints);
   private ProfiledPIDController yController = new ProfiledPIDController(
-    DrivetrainConstants.translationPIDConstants.kP, 
-    DrivetrainConstants.translationPIDConstants.kI, 
-    DrivetrainConstants.translationPIDConstants.kD, 
+    DrivetrainConstants.translationKP, 
+    0.0,
+    0.0, 
     DrivetrainConstants.translationConstraints);
   private ProfiledPIDController rotController = new ProfiledPIDController(
-    DrivetrainConstants.rotationPIDConstants.kP, 
-    DrivetrainConstants.rotationPIDConstants.kI, 
-    DrivetrainConstants.rotationPIDConstants.kD, 
+    DrivetrainConstants.rotationKP, 
+    0.0,
+    0.0,  
     DrivetrainConstants.rotationalConstraints);
 
   private Drivetrain drivetrain;

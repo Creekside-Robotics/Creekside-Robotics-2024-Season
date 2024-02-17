@@ -56,7 +56,6 @@ public class DriverController extends XboxController {
      *         ChassisSpeeds class, factors alliance color
      */
     public ChassisSpeeds getDrivetrainOutput(boolean fieldOriented) {
-        double controllerThrottle = 1.0 - this.getRightTriggerAxis();
         Alliance robotAlliance;
         try {
             robotAlliance = DriverStation.getAlliance().get();
@@ -67,14 +66,14 @@ public class DriverController extends XboxController {
         switch (robotAlliance) {
             case Blue:
                 return new ChassisSpeeds(
-                        -this.getLeftY() * DrivetrainConstants.translationConstraints.maxVelocity * controllerThrottle,
-                        -this.getLeftX() * DrivetrainConstants.translationConstraints.maxVelocity * controllerThrottle,
-                        -this.getRightX() * DrivetrainConstants.rotationalConstraints.maxVelocity * controllerThrottle);
+                        -this.getLeftY() * DrivetrainConstants.translationConstraints.maxVelocity,
+                        -this.getLeftX() * DrivetrainConstants.translationConstraints.maxVelocity,
+                        -this.getRightX() * DrivetrainConstants.rotationalConstraints.maxVelocity);
             case Red:
                 return new ChassisSpeeds(
-                        this.getLeftY() * DrivetrainConstants.translationConstraints.maxVelocity * controllerThrottle,
-                        this.getLeftX() * DrivetrainConstants.translationConstraints.maxVelocity * controllerThrottle,
-                        -this.getRightX() * DrivetrainConstants.rotationalConstraints.maxVelocity * controllerThrottle);
+                        this.getLeftY() * DrivetrainConstants.translationConstraints.maxVelocity,
+                        this.getLeftX() * DrivetrainConstants.translationConstraints.maxVelocity,
+                        -this.getRightX() * DrivetrainConstants.rotationalConstraints.maxVelocity);
             default:
                 return new ChassisSpeeds();
         }
