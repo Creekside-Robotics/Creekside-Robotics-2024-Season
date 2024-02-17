@@ -6,8 +6,7 @@ package frc.robot.commands.drivetrain;
 
 import java.util.function.Supplier;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,12 +15,21 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.DriverController;
 
 public class DriveToPosePID extends Command {
-  private PIDController xController = new PIDController(DrivetrainConstants.translationControllerPGain, 0,
-      DrivetrainConstants.translationControllerDGain);
-  private PIDController yController = new PIDController(DrivetrainConstants.translationControllerPGain, 0,
-      DrivetrainConstants.translationControllerDGain);
-  private PIDController rotController = new PIDController(DrivetrainConstants.rotationControllerPGain, 0,
-      DrivetrainConstants.rotationControllerDGain);
+  private ProfiledPIDController xController = new ProfiledPIDController(
+    DrivetrainConstants.translationPIDConstants.kP, 
+    DrivetrainConstants.translationPIDConstants.kI, 
+    DrivetrainConstants.translationPIDConstants.kD, 
+    DrivetrainConstants.translationConstraints);
+  private ProfiledPIDController yController = new ProfiledPIDController(
+    DrivetrainConstants.translationPIDConstants.kP, 
+    DrivetrainConstants.translationPIDConstants.kI, 
+    DrivetrainConstants.translationPIDConstants.kD, 
+    DrivetrainConstants.translationConstraints);
+  private ProfiledPIDController rotController = new ProfiledPIDController(
+    DrivetrainConstants.rotationPIDConstants.kP, 
+    DrivetrainConstants.rotationPIDConstants.kI, 
+    DrivetrainConstants.rotationPIDConstants.kD, 
+    DrivetrainConstants.rotationalConstraints);
 
   private Drivetrain drivetrain;
   private DriverController driverController;
@@ -121,13 +129,10 @@ public class DriveToPosePID extends Command {
    */
   private ChassisSpeeds getPIDChassisSpeeds() {
     return new ChassisSpeeds(
-        MathUtil.clamp(xController.calculate(drivetrain.getPose().getX() - targetPose.getX(), 0),
-            -DrivetrainConstants.maxTranslationalSpeed, DrivetrainConstants.maxTranslationalSpeed),
-        MathUtil.clamp(yController.calculate(drivetrain.getPose().getY() - targetPose.getY(), 0),
-            -DrivetrainConstants.maxTranslationalSpeed, DrivetrainConstants.maxTranslationalSpeed),
-        MathUtil.clamp(
-            rotController.calculate(drivetrain.getPose().getRotation().minus(targetPose.getRotation()).getRadians(), 0),
-            -DrivetrainConstants.maxRotationalSpeed, DrivetrainConstants.maxRotationalSpeed));
+        xController.calculate(drivetrain.getPose().getX() - targetPose.getX(), 0) + xController.getSetpoint().velocity,
+        yController.calculate(drivetrain.getPose().getY() - targetPose.getY(), 0) + yController.getSetpoint().velocity,
+        rotController.calculate(drivetrain.getPose().getRotation().minus(targetPose.getRotation()).getRadians(), 0) + rotController.getSetpoint().velocity
+    );
   }
 
   /**

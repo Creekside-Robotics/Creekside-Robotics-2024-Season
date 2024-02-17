@@ -67,14 +67,14 @@ public class DriverController extends XboxController {
         switch (robotAlliance) {
             case Blue:
                 return new ChassisSpeeds(
-                        -this.getLeftY() * DrivetrainConstants.maxTranslationalSpeed * controllerThrottle,
-                        -this.getLeftX() * DrivetrainConstants.maxTranslationalSpeed * controllerThrottle,
-                        -this.getRightX() * DrivetrainConstants.maxRotationalSpeed * controllerThrottle);
+                        -this.getLeftY() * DrivetrainConstants.translationConstraints.maxVelocity * controllerThrottle,
+                        -this.getLeftX() * DrivetrainConstants.translationConstraints.maxVelocity * controllerThrottle,
+                        -this.getRightX() * DrivetrainConstants.rotationalConstraints.maxVelocity * controllerThrottle);
             case Red:
                 return new ChassisSpeeds(
-                        this.getLeftY() * DrivetrainConstants.maxTranslationalSpeed * controllerThrottle,
-                        this.getLeftX() * DrivetrainConstants.maxTranslationalSpeed * controllerThrottle,
-                        -this.getRightX() * DrivetrainConstants.maxRotationalSpeed * controllerThrottle);
+                        this.getLeftY() * DrivetrainConstants.translationConstraints.maxVelocity * controllerThrottle,
+                        this.getLeftX() * DrivetrainConstants.translationConstraints.maxVelocity * controllerThrottle,
+                        -this.getRightX() * DrivetrainConstants.rotationalConstraints.maxVelocity * controllerThrottle);
             default:
                 return new ChassisSpeeds();
         }

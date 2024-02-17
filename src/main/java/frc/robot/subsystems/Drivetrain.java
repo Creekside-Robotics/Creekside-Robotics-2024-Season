@@ -123,7 +123,7 @@ public class Drivetrain extends SubsystemBase {
    * @return Gyro reading on the robot in a Rotation2d object
    */
   public Rotation2d getGyroRotation() {
-    var rotation = Rotation2d.fromDegrees(this.gyro.getGyroAngleX());
+    var rotation = Rotation2d.fromDegrees(this.gyro.getGyroAngleZ());
     SmartDashboard.putNumber("Heading", rotation.getRadians());
     return rotation;
   }

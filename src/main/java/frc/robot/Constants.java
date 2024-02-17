@@ -4,11 +4,14 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.util.PIDConstants;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -43,10 +46,10 @@ public final class Constants {
     public static int backRightDrive = 7;
     public static int backRightTurn = 8;
 
-    public static int frontLeftEncoder = 1;
-    public static int frontRightEncoder = 2;
-    public static int backLeftEncoder = 3;
-    public static int backRightEncoder = 4;
+    public static int frontLeftEncoder = 3;
+    public static int frontRightEncoder = 4;
+    public static int backLeftEncoder = 1;
+    public static int backRightEncoder = 2;
 
     public static int driverController = 0;
   }
@@ -55,8 +58,8 @@ public final class Constants {
   }
 
   public static class DrivetrainConstants {
-    public static double wheelBaseLength = 0.6985;
-    public static double trackWidthLength = 0.6985;
+    public static double wheelBaseLength = 0.62865;
+    public static double trackWidthLength = 0.62865;
 
     public static double MaxVoltage = 12.0;
     public static double AbsoluteMaxWheelVelocity = 5880.0 / 60.0 *
@@ -65,15 +68,13 @@ public final class Constants {
     public static double AbsoluteMaxAngularVelocity = AbsoluteMaxWheelVelocity /
         Math.hypot(wheelBaseLength / 2.0, wheelBaseLength / 2.0);
 
-    public static double driveCurrentLimit = 60.0;
+    public static double driveCurrentLimit = 20.0;
 
-    public static double maxTranslationalSpeed = 3.0;
-    public static double maxRotationalSpeed = Math.PI;
+    public static TrapezoidProfile.Constraints translationConstraints = new Constraints(5, 5);
+    public static TrapezoidProfile.Constraints rotationalConstraints = new Constraints(5, 5);
 
-    public static double translationControllerPGain = 6.0;
-    public static double translationControllerDGain = 0.5;
-    public static double rotationControllerPGain = 10.0;
-    public static double rotationControllerDGain = 0.5;
+    public static PIDConstants translationPIDConstants = new PIDConstants(5.0, 0.0, 0.0);
+    public static PIDConstants rotationPIDConstants = new PIDConstants(5.0, 0.0, 0.0);
 
     public static double frontLeftEncoderOffset = Math.toRadians(-95.01);
     public static double frontRightEncoderOffset = Math.toRadians(-184.131) + Math.PI;
