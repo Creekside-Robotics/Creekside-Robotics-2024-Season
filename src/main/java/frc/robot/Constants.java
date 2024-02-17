@@ -45,6 +45,16 @@ public final class Constants {
     public static int backLeftTurn = 6;
     public static int backRightDrive = 7;
     public static int backRightTurn = 8;
+    public static int elevatorLeft = 9;
+    public static int elevatorRight = 10;
+    public static int tiltLeft = 11;
+    public static int tiltRight = 12;
+    public static int shooterLeft = 15;
+    public static int shooterRight = 16;
+    public static int intakeLeft = 13;
+    public static int intakeRight = 14;
+    public static int climberLeft = 17;
+    public static int climberRight = 18;
 
     public static int frontLeftEncoder = 3;
     public static int frontRightEncoder = 4;
@@ -84,7 +94,62 @@ public final class Constants {
     public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.02, 0.02, Math.PI / 30.0);
     public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.8, 0.8, Math.PI / 2.0);
 
-    public static double pushAgainstWallSpeed = 0.15;
+    public static double adjustmentSpeed = 0.15;
+  }
+
+  public static class ElevatorConstants {
+    public static double lowerHeightLimit = 0.375;
+    public static double upperHeightLimit = 0.914;
+
+    public static double pP = 0;
+    public static double pI = 0;
+    public static double pD = 0;
+
+    public static double kS = 0;
+    public static double kG = 0;
+    public static double kA = 0;
+    public static double kV = 0;
+    
+    public static TrapezoidProfile.Constraints constraints = new Constraints(0.5, 0.5);
+
+    public static double conversionFactor = 0.0169;
+
+    public static int currentLimit = 20;
+  }
+
+  public static class TiltConstants {
+    public static double lowerLimit = -Math.PI / 3.0;
+    public static double upperLimit = Math.PI / 3.0;
+
+    public static double pP = 0;
+    public static double pI = 0;
+    public static double pD = 0;
+
+    public static double kS = 0;
+    public static double kG = 0;
+    public static double kA = 0;
+    public static double kV = 0;
+    
+    public static TrapezoidProfile.Constraints constraints = new Constraints(0.5, 0.5);
+
+    public static double conversionFactor = 0.1047;
+
+    public static int currentLimit = 10;
+  }
+
+  public static class ShooterConstants {
+    public static double idleVoltage = 4.0;
+    public static double shootingVoltage = 6.0;
+
+    public static int currentLimit = 20;
+  }
+
+  public static class IntakeConstants {
+    public static double idleVoltage = 0.0;
+    public static double intakeVoltage = 10.0;
+    public static double exitVoltage = -10.0;
+
+    public static int currentLimit = 20;
   }
 
   public static class AutoConstants {

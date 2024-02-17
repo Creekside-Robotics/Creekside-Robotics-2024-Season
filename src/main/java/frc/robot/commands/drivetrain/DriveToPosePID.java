@@ -168,8 +168,8 @@ public class DriveToPosePID extends Command {
   @Override
   public boolean isFinished() {
     return !hold
-        && (this.xController.atSetpoint() || !this.usePID[0])
-        && (this.yController.atSetpoint() || !this.usePID[1])
-        && (this.rotController.atSetpoint() || !this.usePID[2]);
+        && (this.xController.atGoal() || !this.usePID[0])
+        && (this.yController.atGoal() || !this.usePID[1])
+        && (this.rotController.atGoal() || !this.usePID[2]);
   }
 }
