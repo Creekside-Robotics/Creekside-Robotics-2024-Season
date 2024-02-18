@@ -4,13 +4,21 @@
 
 package frc.robot;
 
+import java.util.NoSuchElementException;
+
+import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -36,8 +44,8 @@ public final class Constants {
    * Use the following format: public static {deviceName} = {IdNumber};
    */
   public static class DeviceIds {
-    public static int frontLeftDrive = 2;
     public static int frontLeftTurn = 1;
+    public static int frontLeftDrive = 2;
     public static int frontRightDrive = 3;
     public static int frontRightTurn = 4;
     public static int backLeftDrive = 5;
@@ -48,10 +56,10 @@ public final class Constants {
     public static int elevatorRight = 10;
     public static int tiltLeft = 11;
     public static int tiltRight = 12;
-    public static int shooterLeft = 15;
-    public static int shooterRight = 16;
     public static int intakeLeft = 13;
     public static int intakeRight = 14;
+    public static int shooterLeft = 15;
+    public static int shooterRight = 16;
     public static int climberLeft = 17;
     public static int climberRight = 18;
 
@@ -156,4 +164,55 @@ public final class Constants {
     public static double maxAcceleration = 1.5;
   }
 
-}
+  public static class BlueTeamWaypoints {
+    public static Pose2d speaker = new Pose2d(1.40,5.60,new Rotation2d(-90.00));
+    public static Pose2d amp = new Pose2d(1.85,7.25,new Rotation2d(0.00));
+    public static Pose2d pickup = new Pose2d(15.15,1.60,new Rotation2d(30.00));
+    public static Pose2d chainLeft = new Pose2d(4.00,5.50,new Rotation2d(30.00));
+    public static Pose2d chainRight = new Pose2d(4.00,2.65,new Rotation2d(-30.00));
+    public static Pose2d chainBack = new Pose2d(6.40,4.10,new Rotation2d(90.00));
+  }
+
+  public static class RedTeamWaypoints {
+    public static Pose2d speaker = new Pose2d(15.10,5.65,new Rotation2d(90.00));
+    public static Pose2d amp = new Pose2d(14.85,7.15,new Rotation2d(180));
+    public static Pose2d pickup = new Pose2d(1.20,1.75,new Rotation2d(150.00));
+    public static Pose2d chainLeft = new Pose2d(12.55,2.65,new Rotation2d(-150.00));
+    public static Pose2d chainRight = new Pose2d(12.60,5.50,new Rotation2d(150.00));
+    public static Pose2d chainBack = new Pose2d(10.15,4.00,new Rotation2d(90.00));
+  }
+
+  public static class TeamWaypoints {
+    public static Pose2d speaker;
+    public static Pose2d amp;
+    public static Pose2d pickup;
+    public static Pose2d chainLeft;
+    public static Pose2d chainRight;
+    public static Pose2d chainBack;
+    public static void main(String[] args) {
+      Alliance robotAlliance;
+        try {
+            robotAlliance = DriverStation.getAlliance().get();
+        } catch (NoSuchElementException e) {
+            robotAlliance = Alliance.Blue;
+        }
+
+        switch (robotAlliance) {
+            case Blue:
+                speaker = BlueTeamWaypoints.speaker;
+                amp = BlueTeamWaypoints.amp;
+                pickup = BlueTeamWaypoints.pickup;
+                chainLeft = BlueTeamWaypoints.chainLeft;
+                chainRight = BlueTeamWaypoints.chainRight;
+                chainBack = BlueTeamWaypoints.chainBack;
+            case Red:
+                speaker = RedTeamWaypoints.speaker;
+                amp = RedTeamWaypoints.amp;
+                pickup = RedTeamWaypoints.pickup;
+                chainLeft = RedTeamWaypoints.chainLeft;
+                chainRight = RedTeamWaypoints.chainRight;
+                chainBack = RedTeamWaypoints.chainBack;
+        }
+    }
+    }
+  }
