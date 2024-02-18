@@ -34,8 +34,16 @@ public class ManualDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    ChassisSpeeds povOutput = this.controller.getPOVDrivetrainOutput();
+    ChassisSpeeds stickOutput = this.controller.getDrivetrainOutput();
+
+    if (povOutput != null) {
+      this.drivetrain.setDrivetrainOutput(
+        povOutput,
+        false);
+    }
     this.drivetrain.setDrivetrainOutput(
-        this.controller.getDrivetrainOutput(true),
+        stickOutput,
         true);
   }
 

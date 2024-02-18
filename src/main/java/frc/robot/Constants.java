@@ -87,11 +87,13 @@ public final class Constants {
 
     public static double driveCurrentLimit = 20.0;
 
-    public static TrapezoidProfile.Constraints translationConstraints = new Constraints(5, 5);
-    public static TrapezoidProfile.Constraints rotationalConstraints = new Constraints(5, 5);
+    public static double translationMaxVelocity = 4.0;
+    public static double rotationMaxVelocity = 2.0 * Math.PI;
 
     public static double translationKP = 5;
+    public static double translationKD = 0.5;
     public static double rotationKP = 5;
+    public static double rotationKD = 0.5;
 
     public static double frontLeftEncoderOffset = Math.toRadians(-89.82) - Math.PI / 2.0;
     public static double frontRightEncoderOffset = Math.toRadians(-180.703) + Math.PI / 2.0;
@@ -101,23 +103,18 @@ public final class Constants {
     public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.02, 0.02, Math.PI / 30.0);
     public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.8, 0.8, Math.PI / 2.0);
 
-    public static double adjustmentSpeed = 0.15;
+    public static double adjustmentSpeed = 0.25;
   }
 
   public static class ElevatorConstants {
     public static double lowerHeightLimit = 0.375;
     public static double upperHeightLimit = 0.914;
 
-    public static double pP = 0;
+    public static double pP = 6;
     public static double pI = 0;
-    public static double pD = 0;
+    public static double pD = 0.5;
 
     public static double kS = 0;
-    public static double kG = 0;
-    public static double kA = 0;
-    public static double kV = 0;
-    
-    public static TrapezoidProfile.Constraints constraints = new Constraints(0.5, 0.5);
 
     public static double conversionFactor = 0.0169;
 
@@ -128,14 +125,11 @@ public final class Constants {
     public static double lowerLimit = -Math.PI / 3.0;
     public static double upperLimit = Math.PI / 3.0;
 
-    public static double pP = 0;
+    public static double pP = 4;
     public static double pI = 0;
-    public static double pD = 0;
+    public static double pD = 0.5;
 
     public static double kS = 0;
-    public static double kG = 0;
-    public static double kA = 0;
-    public static double kV = 0;
     
     public static TrapezoidProfile.Constraints constraints = new Constraints(0.5, 0.5);
 
@@ -189,6 +183,7 @@ public final class Constants {
     public static Pose2d chainLeft;
     public static Pose2d chainRight;
     public static Pose2d chainBack;
+    
     public static void main(String[] args) {
       Alliance robotAlliance;
         try {
