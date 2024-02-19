@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DeviceIds;
 import frc.robot.Constants.ClimberConstants;
 
-public class Climber extends Subsystembase{
+public class Climber extends SubsystemBase{
     /** Creates a new Climber **/
     private CANSparkMax leftMotor = new CANSparkMax(DeviceIds.climberLeft, MotorType.kBrushless);
     private CANSparkMax rightMotor = new CANSparkMax(DeviceIds.climberRight, MotorType.kBrushless);
@@ -26,7 +26,7 @@ public class Climber extends Subsystembase{
         rightMotor.setSmartCurrentLimit(ClimberConstants.currentLimit);
 
         encoder = leftMotor.getEncoder();
-        encoder.setPositionConversionFactor(ClimberConstants.conversionFactor);
+        encoder.setPositionConversionFactor(ClimberConstants.conversionRate);
     }
 
     public void setVoltage (double voltage) {
@@ -34,13 +34,14 @@ public class Climber extends Subsystembase{
         rightMotor.setVoltage(voltage);
     }
 
-    public getPosition() {
+    public int getPosition() {
         /** 
          * 1 - extended
          * 0 - retracted 
         **/
 
         double position = encoder.getPosition();
-        /* Figure out position values for correct comparison */
+        if (position >= 1) return 1;
+        else return 0;
     }
 }
