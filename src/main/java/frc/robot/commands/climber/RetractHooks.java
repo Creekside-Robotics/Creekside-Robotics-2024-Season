@@ -8,11 +8,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
 
-public class RetractHooks extends Commands{
+public class RetractHooks extends Command{
     /* Figure out encoder's position output to determine further branching*/
 
     private Climber climber;
-    private double voltage;
 
     public RetractHooks(){
         // Use addRequirements() here to declare subsystem dependencies.
@@ -23,15 +22,12 @@ public class RetractHooks extends Commands{
 
      // Called when the command is initially scheduled.
     @Override
-    public void initialize() {
-        this.voltage = ClimberConstants.retractedVoltage;
-    }
+    public void initialize() {}
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (climber.getPosition() == 0) return; /* Skip if hooks are already retracted */
-        /* Keep going until climbers encoder stops updating its value with the same rate */
+        climber.setVoltage(ClimberConstants.retractVoltage);
     }
 
     // Called once the command ends or is interrupted.
@@ -41,6 +37,6 @@ public class RetractHooks extends Commands{
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return this.climber.notePresent();
+        return this.climber.getPosition() == 0;
     }
 }
