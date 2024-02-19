@@ -34,13 +34,13 @@ public class SetTiltPosition extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    this.tilt.setPosition(this.positionSupplier.get());
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    this.tilt.setPosition(this.positionSupplier.get());
+  }
 
   // Called once the command ends or is interrupted.
   @Override
