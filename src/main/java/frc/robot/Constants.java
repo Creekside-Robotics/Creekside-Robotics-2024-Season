@@ -142,7 +142,7 @@ public final class Constants {
     
     public static int currentLimit = 10; /* Check the limit */
 
-    public static double conversionRate = 0.1111; /* Calculate the conversion rate */
+    public static double conversionRate = 0.0066; /* 1/((Counts per revolution * gear ratio)/(pi*pulley diameter) * length of travel) */
   }
 
   public static class ShooterConstants {
