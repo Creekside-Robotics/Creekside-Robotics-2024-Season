@@ -136,6 +136,15 @@ public final class Constants {
     public static int currentLimit = 10;
   }
 
+  public static class ClimberConstants {
+    public static double extendVoltage = 8; /* Figure out optimal voltage */
+    public static double retractVoltage = 12; /* Figure out optimal voltage */
+    
+    public static int currentLimit = 10; /* Check the limit */
+
+    public static double conversionRate = 0.1111; /* Calculate the conversion rate */
+  }
+
   public static class ShooterConstants {
     public static double idleVoltage = 4.0;
     public static double shootingVoltage = 10;
