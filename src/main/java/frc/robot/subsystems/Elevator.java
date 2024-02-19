@@ -8,25 +8,17 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.ElevatorFeedforward;
-import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DeviceIds;
 import frc.robot.Constants.ElevatorConstants;
 
 public class Elevator extends SubsystemBase {
   /** Creates a new Elevator. */
-  private ProfiledPIDController elevatorController = new ProfiledPIDController(
+  private PIDController elevatorController = new PIDController(
     ElevatorConstants.pP, 
     ElevatorConstants.pI,
-    ElevatorConstants.pD, 
-    ElevatorConstants.constraints
-  );
-  private ElevatorFeedforward elevatorFeedforward = new ElevatorFeedforward(
-    ElevatorConstants.kS,
-    ElevatorConstants.kG, 
-    ElevatorConstants.kV,
-    ElevatorConstants.kA
+    ElevatorConstants.pD
   );
 
   private CANSparkMax leftMotor = new CANSparkMax(DeviceIds.elevatorLeft, MotorType.kBrushless);
@@ -51,8 +43,7 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     setVoltage(
-      elevatorController.calculate(encoder.getPosition(), goalPosition) +
-      elevatorFeedforward.calculate(elevatorController.getSetpoint().velocity)
+      elevatorController.calculate(encoder.getPosition(), goalPosition) + ElevatorConstants.kS
     );
   }
 
@@ -66,6 +57,6 @@ public class Elevator extends SubsystemBase {
   }
 
   public boolean atPosition() {
-    return elevatorController.atGoal();
+    return elevatorController.atSetpoint();
   }
 }

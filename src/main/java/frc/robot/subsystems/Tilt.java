@@ -8,25 +8,17 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DeviceIds;
 import frc.robot.Constants.TiltConstants;
 
 public class Tilt extends SubsystemBase {
   /** Creates a new Elevator. */
-  private ProfiledPIDController tiltController = new ProfiledPIDController(
+  private PIDController tiltController = new PIDController(
     TiltConstants.pP, 
     TiltConstants.pI,
-    TiltConstants.pD, 
-    TiltConstants.constraints
-  );
-  private ArmFeedforward tiltFeedforward = new ArmFeedforward(
-    TiltConstants.kS,
-    TiltConstants.kG, 
-    TiltConstants.kV,
-    TiltConstants.kA
+    TiltConstants.pD
   );
 
   private CANSparkMax leftMotor = new CANSparkMax(DeviceIds.tiltLeft, MotorType.kBrushless);
@@ -51,8 +43,7 @@ public class Tilt extends SubsystemBase {
   @Override
   public void periodic() {
     setVoltage(
-      tiltController.calculate(encoder.getPosition(), goalPosition) +
-      tiltFeedforward.calculate(encoder.getPosition(), tiltController.getSetpoint().velocity)
+      tiltController.calculate(encoder.getPosition(), goalPosition)
     );
   }
 
@@ -66,6 +57,6 @@ public class Tilt extends SubsystemBase {
   }
 
   public boolean atPosition() {
-    return tiltController.atGoal();
+    return tiltController.atSetpoint();
   }
 }

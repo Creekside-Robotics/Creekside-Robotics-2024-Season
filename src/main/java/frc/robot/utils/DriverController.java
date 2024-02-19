@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
@@ -55,7 +56,7 @@ public class DriverController extends XboxController {
      * @return A 3D Pose vector <xVel, yVel, rotVel> in the format of the WPILIB
      *         ChassisSpeeds class, factors alliance color
      */
-    public ChassisSpeeds getDrivetrainOutput(boolean fieldOriented) {
+    public ChassisSpeeds getDrivetrainOutput() {
         Alliance robotAlliance;
         try {
             robotAlliance = DriverStation.getAlliance().get();
@@ -66,16 +67,31 @@ public class DriverController extends XboxController {
         switch (robotAlliance) {
             case Blue:
                 return new ChassisSpeeds(
-                        -this.getLeftY() * DrivetrainConstants.translationConstraints.maxVelocity,
-                        -this.getLeftX() * DrivetrainConstants.translationConstraints.maxVelocity,
-                        -this.getRightX() * DrivetrainConstants.rotationalConstraints.maxVelocity);
+                        -this.getLeftY() * DrivetrainConstants.translationMaxVelocity,
+                        -this.getLeftX() * DrivetrainConstants.translationMaxVelocity,
+                        -this.getRightX() * DrivetrainConstants.rotationMaxVelocity);
             case Red:
                 return new ChassisSpeeds(
-                        this.getLeftY() * DrivetrainConstants.translationConstraints.maxVelocity,
-                        this.getLeftX() * DrivetrainConstants.translationConstraints.maxVelocity,
-                        -this.getRightX() * DrivetrainConstants.rotationalConstraints.maxVelocity);
+                        this.getLeftY() * DrivetrainConstants.translationMaxVelocity,
+                        this.getLeftX() * DrivetrainConstants.translationMaxVelocity,
+                        -this.getRightX() * DrivetrainConstants.rotationMaxVelocity);
             default:
                 return new ChassisSpeeds();
+        }
+    }
+
+    public ChassisSpeeds getPOVDrivetrainOutput(){
+        int povAngle = this.getPOV();
+        Rotation2d correctedAngle = new Rotation2d(-Math.toRadians(povAngle));
+
+        if (povAngle == -1) {
+            return null;
+        } else {
+            return new ChassisSpeeds(
+                correctedAngle.getCos() * DrivetrainConstants.adjustmentSpeed,
+                correctedAngle.getSin() * DrivetrainConstants.adjustmentSpeed,
+                0.0
+            );
         }
     }
 }
