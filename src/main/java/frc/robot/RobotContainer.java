@@ -5,22 +5,19 @@
 package frc.robot;
 
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.drivetrain.ManualDrive;
-import frc.robot.commands.drivetrain.SetPose;
-import frc.robot.commands.intake.RunUntilGamePiece;
 import frc.robot.commands.intake.SetIntakeVoltage;
 import frc.robot.commands.shooter.SetShooterVoltage;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Tilt;
 import frc.robot.utils.DriverController;
+import frc.robot.utils.ShooterCalculator;
 
 /**
  * This class is where the bulk of the robot is declared. Since
@@ -36,8 +33,13 @@ public class RobotContainer {
     private final Drivetrain drivetrain = new Drivetrain();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
+    private final Elevator elevator = new Elevator();
+    private final Tilt tilt = new Tilt();
 
     private final DriverController mainController = new DriverController(Constants.DeviceIds.driverController);
+    private final DriverController alternateController = new DriverController(Constants.DeviceIds.alternateController);
+
+    private final ShooterCalculator shooterCalculator = new ShooterCalculator(drivetrain);
 
     private final SendableChooser<Command> commandChooser = new SendableChooser<>();
 
@@ -56,24 +58,7 @@ public class RobotContainer {
         this.drivetrain.setDefaultCommand(new ManualDrive(drivetrain, mainController));
         this.shooter.setDefaultCommand(new SetShooterVoltage(shooter, ShooterConstants.idleVoltage));
         this.intake.setDefaultCommand(new SetIntakeVoltage(intake, 0));
-
-        this.mainController.buttons.get(1).whileTrue(
-            new SequentialCommandGroup(
-                new SetShooterVoltage(shooter, ShooterConstants.shootingVoltage).withTimeout(3.0),
-                new ParallelDeadlineGroup(
-                    new SetShooterVoltage(shooter, ShooterConstants.shootingVoltage).withTimeout(3.0),
-                    new SetIntakeVoltage(intake, IntakeConstants.intakeVoltage)
-                )
-            )
-        );
         
-        this.mainController.buttons.get(2).whileTrue(
-            new RunUntilGamePiece(intake)
-        );
-
-        this.mainController.buttons.get(3).onTrue(
-            new SetPose(drivetrain, new Pose2d())
-        );
     }
 
     /**

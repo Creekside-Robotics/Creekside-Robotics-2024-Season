@@ -67,6 +67,7 @@ public final class Constants {
     public static int backRightEncoder = 4;
 
     public static int driverController = 0;
+    public static int alternateController = 1;
   }
 
   public static class ControllerConstants {
