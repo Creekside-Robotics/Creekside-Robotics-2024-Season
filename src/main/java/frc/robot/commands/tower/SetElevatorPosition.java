@@ -11,13 +11,13 @@ public class SetElevatorPosition extends Command {
   /** Creates a new SetElevatorPosition. */
   private Elevator elevator;
   private double position;
-  private boolean wait;
+  private boolean hold;
 
-  public SetElevatorPosition(Elevator elevator, double position, boolean wait) {
+  public SetElevatorPosition(Elevator elevator, double position, boolean hold) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.elevator = elevator;
     this.position = position;
-    this.wait = wait;
+    this.hold = hold;
 
     addRequirements(this.elevator);
   }
@@ -39,6 +39,6 @@ public class SetElevatorPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !wait || this.elevator.atPosition();
+    return !hold && this.elevator.atPosition();
   }
 }

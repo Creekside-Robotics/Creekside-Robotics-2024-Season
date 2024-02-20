@@ -12,22 +12,22 @@ public class SetTiltPosition extends Command {
   /** Creates a new SetTiltPosition. */
   private Tilt tilt;
   private Supplier<Double> positionSupplier;
-  private boolean wait;
+  private boolean hold;
 
-  public SetTiltPosition(Tilt tilt, double position, boolean wait) {
+  public SetTiltPosition(Tilt tilt, double position, boolean hold) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.tilt = tilt;
     this.positionSupplier = () -> position;
-    this.wait = wait;
+    this.hold = hold;
 
     addRequirements(this.tilt);
   }
 
-  public SetTiltPosition(Tilt tilt, Supplier<Double> positionSupplier, boolean wait) {
+  public SetTiltPosition(Tilt tilt, Supplier<Double> positionSupplier, boolean hold) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.tilt = tilt;
     this.positionSupplier = positionSupplier;
-    this.wait = wait;
+    this.hold = hold;
 
     addRequirements(this.tilt);
   }
@@ -49,6 +49,6 @@ public class SetTiltPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !this.wait || this.tilt.atPosition();
+    return !this.hold && this.tilt.atPosition();
   }
 }

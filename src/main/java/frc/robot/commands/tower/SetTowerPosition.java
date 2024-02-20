@@ -20,16 +20,16 @@ public class SetTowerPosition extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetTiltPosition(tilt, TiltConstants.upperLimit, true),
-      new SetElevatorPosition(elevator, elevatorPosition, true),
-      new SetTiltPosition(tilt, tiltPosition, true)
+      new SetTiltPosition(tilt, TiltConstants.upperLimit, false),
+      new SetElevatorPosition(elevator, elevatorPosition, false),
+      new SetTiltPosition(tilt, tiltPosition, false)
     );
   }
 
   public SetTowerPosition(Elevator elevator, Tilt tilt, double elevatorPosition, Supplier<Double> tiltPositionSupplier) {
     addCommands(
-      new SetTiltPosition(tilt, TiltConstants.upperLimit, true),
-      new SetElevatorPosition(elevator, elevatorPosition, true),
+      new SetTiltPosition(tilt, TiltConstants.upperLimit, false),
+      new SetElevatorPosition(elevator, elevatorPosition, false),
       new SetTiltPosition(tilt, tiltPositionSupplier, true)
     );
   }

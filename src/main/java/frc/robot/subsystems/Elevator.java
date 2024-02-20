@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DeviceIds;
@@ -43,7 +44,11 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     setVoltage(
-      elevatorController.calculate(encoder.getPosition(), goalPosition) + ElevatorConstants.kS
+      MathUtil.clamp(
+        elevatorController.calculate(encoder.getPosition(), goalPosition), 
+        -ElevatorConstants.maxVoltage, 
+        ElevatorConstants.maxVoltage
+      ) + ElevatorConstants.kS
     );
   }
 
