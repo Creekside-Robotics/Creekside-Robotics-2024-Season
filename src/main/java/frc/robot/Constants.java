@@ -183,13 +183,13 @@ public final class Constants {
   }
 
   public static class TeamWaypoints {
-    public static Pose2d speaker;
-    public static Pose2d amp;
-    public static Pose2d pickup;
-    public static Pose2d chainLeft;
-    public static Pose2d chainRight;
-    public static Pose2d chainBack;
-    public static void main(String[] args) {
+    public Pose2d speaker;
+    public Pose2d amp;
+    public Pose2d pickup;
+    public Pose2d chainLeft;
+    public Pose2d chainRight;
+    public Pose2d chainBack;
+    public TeamWaypoints() {
       Alliance robotAlliance;
         try {
             robotAlliance = DriverStation.getAlliance().get();
