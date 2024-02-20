@@ -96,19 +96,14 @@ public class DriveToPosePID extends Command {
     addRequirements(this.drivetrain);
   }
 
-  public DriveToPosePID(Drivetrain drivetrain2, DriverController mainController, Object pose, boolean[] usePID2,
-      Pose2d tolerance, boolean hold2) {
-  }
-
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    this.targetPose = this.poseSupplier.get();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    this.targetPose = this.poseSupplier.get();
     ChassisSpeeds pidOutput = getPIDChassisSpeeds();
     ChassisSpeeds driverOutput = this.driverController.getDrivetrainOutput();
     this.drivetrain.setDrivetrainOutput(fuseOutputSpeeds(pidOutput, driverOutput), true);

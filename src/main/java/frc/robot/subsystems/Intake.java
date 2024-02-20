@@ -32,7 +32,7 @@ public class Intake extends SubsystemBase {
     rightMotor.setSmartCurrentLimit(IntakeConstants.currentLimit);
 
     colorMatcher.addColorMatch(Color.kOrange);
-    colorMatcher.setConfidenceThreshold(0.6);
+    colorMatcher.setConfidenceThreshold(0.4);
   }
 
   @Override

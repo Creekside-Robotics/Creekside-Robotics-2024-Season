@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DeviceIds;
@@ -38,12 +39,18 @@ public class Tilt extends SubsystemBase {
     encoder = leftMotor.getEncoder();
     encoder.setPositionConversionFactor(TiltConstants.conversionFactor);
     encoder.setPosition(TiltConstants.upperLimit);
+
+    tiltController.setTolerance(TiltConstants.tolerance);
   }
 
   @Override
   public void periodic() {
     setVoltage(
-      tiltController.calculate(encoder.getPosition(), goalPosition)
+      MathUtil.clamp(
+        tiltController.calculate(encoder.getPosition(), goalPosition), 
+        -TiltConstants.maxVoltage, 
+        TiltConstants.maxVoltage
+      ) + TiltConstants.kS
     );
   }
 

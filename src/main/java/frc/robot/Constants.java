@@ -4,19 +4,17 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
-import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
@@ -69,6 +67,7 @@ public final class Constants {
     public static int backRightEncoder = 4;
 
     public static int driverController = 0;
+    public static int alternateController = 1;
   }
 
   public static class ControllerConstants {
@@ -110,11 +109,19 @@ public final class Constants {
     public static double lowerHeightLimit = 0.375;
     public static double upperHeightLimit = 0.914;
 
+    public static double ampPosition = 0.889;
+    public static double shootPosition = 0.609;
+    public static double pickupPosition = 0.550;
+
     public static double pP = 6;
     public static double pI = 0;
     public static double pD = 0.5;
 
-    public static double kS = 0;
+    public static double kS = 1;
+
+    public static double maxVoltage = 8;
+
+    public static double tolerance = 0.03;
 
     public static double conversionFactor = 0.0169;
 
@@ -125,13 +132,18 @@ public final class Constants {
     public static double lowerLimit = -Math.PI / 3.0;
     public static double upperLimit = Math.PI / 3.0;
 
+    public static double ampAngle = Math.PI / 12.0;
+    public static double pickupAngle = - Math.PI / 4;
+
     public static double pP = 4;
     public static double pI = 0;
     public static double pD = 0.5;
 
     public static double kS = 0;
     
-    public static TrapezoidProfile.Constraints constraints = new Constraints(0.5, 0.5);
+    public static double maxVoltage = 8;
+
+    public static double tolerance = 0.03;
 
     public static double conversionFactor = 0.1047;
 
@@ -140,7 +152,9 @@ public final class Constants {
 
   public static class ShooterConstants {
     public static double idleVoltage = 4.0;
-    public static double shootingVoltage = 10;
+    public static double shootingVoltage = 8.0;
+
+    public static double revtime = 1.5;
 
     public static int currentLimit = 20;
   }
@@ -150,7 +164,10 @@ public final class Constants {
     public static double intakeVoltage = 10.0;
     public static double exitVoltage = -10.0;
 
-    public static int currentLimit = 30;
+    public static double shootTime = 0.75;
+    public static double ampTime = 1.5;
+
+    public static int currentLimit = 20;
   }
 
   public static class AutoConstants {
@@ -165,6 +182,57 @@ public final class Constants {
     public static Pose2d chainLeft = new Pose2d(4.00,5.50,new Rotation2d(30.00));
     public static Pose2d chainRight = new Pose2d(4.00,2.65,new Rotation2d(-30.00));
     public static Pose2d chainBack = new Pose2d(6.40,4.10,new Rotation2d(90.00));
+  }
+
+  public static class FieldConstants {
+    public static double fieldLength = 16.54;
+
+    public static Pose2d speakerPosition = new Pose2d(0.25, 5.55, new Rotation2d());
+    public static double speakerHeight = 2.032;
+
+    public static Pose2d speaker = new Pose2d(1.40,5.60,new Rotation2d(-90.00));
+    public static Pose2d amp = new Pose2d(1.85,7.25,new Rotation2d(0.00));
+    public static Pose2d pickup = new Pose2d(15.15,1.60,new Rotation2d(30.00));
+
+    public static Pose2d chainLeft = new Pose2d(4.00,5.50,new Rotation2d(30.00));
+    public static Pose2d chainRight = new Pose2d(4.00,2.65,new Rotation2d(-30.00));
+    public static Pose2d chainBack = new Pose2d(6.40,4.10,new Rotation2d(90.00));
+
+    public static Pose2d[] climbPositions = {chainLeft, chainRight, chainBack};
+
+
+    public static Pose2d tranformPoseBluePose(Pose2d bluePose) {
+      Pose2d redPose = new Pose2d(
+        fieldLength - bluePose.getX(),
+        bluePose.getY(),
+        new Rotation2d(Math.PI - bluePose.getRotation().getRadians())
+      );
+
+      Optional<Alliance> alliance = DriverStation.getAlliance();
+
+      if (alliance.isEmpty()) {
+        return bluePose;
+      } else {
+        switch (alliance.get()) {
+          case Blue:
+            return bluePose;
+          case Red:
+            return redPose;
+          default:
+            return bluePose;
+        }
+      }
+    }
+
+    public static Pose2d[] transformBluePoses(Pose2d[] bluePoses) {
+      ArrayList<Pose2d> tranformedPoses = new ArrayList<Pose2d>();
+
+      for (Pose2d pose : bluePoses) {
+        tranformedPoses.add(tranformPoseBluePose(pose));
+      }
+
+      return (Pose2d[]) tranformedPoses.toArray();
+    }
   }
 
   public static class RedTeamWaypoints {
