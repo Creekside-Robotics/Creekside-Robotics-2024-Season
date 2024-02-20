@@ -4,6 +4,8 @@
 
 package frc.robot.commands.climber;
 
+import java.lang.reflect.Array;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
@@ -27,7 +29,7 @@ public class RetractHooks extends Command{
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        climber.setVoltage(ClimberConstants.retractVoltage);
+        climber.setVoltage(ClimberConstants.retractVoltage);        
     }
 
     // Called once the command ends or is interrupted.
@@ -37,6 +39,6 @@ public class RetractHooks extends Command{
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return this.climber.getPosition() == 0;
+        return this.climber.getVelocity() <= 0;
     }
 }
