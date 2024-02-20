@@ -26,7 +26,8 @@ public class Climber extends SubsystemBase{
         rightMotor.setSmartCurrentLimit(ClimberConstants.currentLimit);
 
         encoder = leftMotor.getEncoder();
-        encoder.setPositionConversionFactor(ClimberConstants.conversionRate);
+        encoder.setPositionConversionFactor(ClimberConstants.positionConversionRate);
+        encoder.setVelocityConversionFactor(ClimberConstants.positionConversionRate/this.encoder.getMeasurementPeriod());
     }
 
     public void setVoltage (double voltage) {
@@ -34,7 +35,7 @@ public class Climber extends SubsystemBase{
         rightMotor.setVoltage(voltage);
     }
 
-    public int getPosition() {
+    public double getPosition() {
         /** 
          * 1 - extended
          * 0 - retracted 
@@ -42,6 +43,11 @@ public class Climber extends SubsystemBase{
 
         double position = encoder.getPosition();
         if (position >= 1) return 1;
-        else return 0;
+        else if (position <= 0) return 0;
+        else return position;
+    }
+
+    public double getVelocity() {
+        return this.encoder.getVelocity();
     }
 }
