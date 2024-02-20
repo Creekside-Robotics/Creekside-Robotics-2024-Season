@@ -39,6 +39,8 @@ public class Elevator extends SubsystemBase {
     encoder = leftMotor.getEncoder();
     encoder.setPositionConversionFactor(ElevatorConstants.conversionFactor);
     encoder.setPosition(ElevatorConstants.lowerHeightLimit);
+
+    elevatorController.setTolerance(ElevatorConstants.tolerance);
   }
 
   @Override

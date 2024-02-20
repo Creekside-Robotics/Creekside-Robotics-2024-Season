@@ -120,6 +120,8 @@ public final class Constants {
 
     public static double maxVoltage = 8;
 
+    public static double tolerance = 0.03;
+
     public static double conversionFactor = 0.0169;
 
     public static int currentLimit = 20;
@@ -139,6 +141,8 @@ public final class Constants {
     public static double kS = 0;
     
     public static double maxVoltage = 8;
+
+    public static double tolerance = 0.03;
 
     public static double conversionFactor = 0.1047;
 
