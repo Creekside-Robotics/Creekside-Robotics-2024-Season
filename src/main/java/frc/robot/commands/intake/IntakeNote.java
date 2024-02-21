@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
-public class RunUntilGamePiece extends Command {
+public class IntakeNote extends Command {
   /** Creates a new RunUntilGamePiece. */
 private Intake intake;
 
-  public RunUntilGamePiece(Intake intake) {
+  public IntakeNote(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intake = intake;
 

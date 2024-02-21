@@ -7,10 +7,23 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.composite.PrepShot;
+import frc.robot.commands.composite.ShootNote;
+import frc.robot.commands.drivetrain.DriveToAmp;
+import frc.robot.commands.drivetrain.DriveToPickup;
+import frc.robot.commands.drivetrain.DriveToShoot;
 import frc.robot.commands.drivetrain.ManualDrive;
+import frc.robot.commands.intake.IntakeAmp;
+import frc.robot.commands.intake.IntakeNote;
 import frc.robot.commands.intake.SetIntakeVoltage;
+import frc.robot.commands.shooter.RevShooter;
 import frc.robot.commands.shooter.SetShooterVoltage;
+import frc.robot.commands.tower.RetractTower;
+import frc.robot.commands.tower.SetAmpTower;
+import frc.robot.commands.tower.SetPickupTower;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -58,7 +71,78 @@ public class RobotContainer {
         this.drivetrain.setDefaultCommand(new ManualDrive(drivetrain, mainController));
         this.shooter.setDefaultCommand(new SetShooterVoltage(shooter, ShooterConstants.idleVoltage));
         this.intake.setDefaultCommand(new SetIntakeVoltage(intake, 0));
-        
+
+        this.mainController.buttons.get("B").whileTrue(
+            new ParallelCommandGroup(
+                new DriveToShoot(drivetrain, mainController, shooterCalculator),
+                new PrepShot(shooter, elevator, tilt, shooterCalculator)
+            )
+        );
+        this.mainController.buttons.get("B").onFalse(
+            new SequentialCommandGroup(
+                new ShootNote(shooter, intake),
+                new RetractTower(elevator, tilt)
+            )
+        );
+
+        this.mainController.buttons.get("Y").whileTrue(
+            new ParallelCommandGroup(
+                new DriveToAmp(drivetrain, mainController),
+                new SetAmpTower(elevator, tilt)
+            )
+        );
+        this.mainController.buttons.get("Y").onFalse(
+            new SequentialCommandGroup(
+                new IntakeAmp(intake),
+                new RetractTower(elevator, tilt)
+            )
+        );
+
+        this.mainController.buttons.get("A").whileTrue(
+            new IntakeNote(intake)
+        );
+
+        this.mainController.buttons.get("X").whileTrue(
+            new ParallelCommandGroup(
+                new DriveToPickup(drivetrain, mainController),
+                new SetPickupTower(elevator, tilt),
+                new IntakeNote(intake)
+            )
+        );
+        this.mainController.buttons.get("X").onFalse(
+            new RetractTower(elevator, tilt)
+        );
+
+        this.alternateController.buttons.get("B").whileTrue(
+            new SequentialCommandGroup(
+                new RevShooter(shooter),
+                new ShootNote(shooter, intake)
+            )
+        );
+
+        this.alternateController.buttons.get("Y").whileTrue(
+            new SetAmpTower(elevator, tilt)
+        );
+        this.alternateController.buttons.get("Y").onFalse(
+            new SequentialCommandGroup(
+                new IntakeAmp(intake),
+                new RetractTower(elevator, tilt)
+            )
+        );
+
+        this.alternateController.buttons.get("A").whileTrue(
+            new RetractTower(elevator, tilt)
+        );
+
+        this.alternateController.buttons.get("X").whileTrue(
+            new ParallelCommandGroup(
+                new SetPickupTower(elevator, tilt),
+                new IntakeNote(intake)
+            )
+        );
+        this.alternateController.buttons.get("X").onFalse(
+            new RetractTower(elevator, tilt)
+        );
     }
 
     /**

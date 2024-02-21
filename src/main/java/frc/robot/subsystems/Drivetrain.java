@@ -52,6 +52,10 @@ public class Drivetrain extends SubsystemBase {
 
   private final Field2d field2d = new Field2d();
 
+  private double[] robotVelocity = {0.0, 0.0};
+  private double[] oldPosition = {0.0, 0.0, 0.0};
+
+
   /**
    * Creates a new drivetrain object. Represents a four corner swerve drive
    * with odometry using encoder/Limelight fused data.
@@ -115,6 +119,7 @@ public class Drivetrain extends SubsystemBase {
     this.poseEstimator.update(getGyroRotation(), getModulePositions());
     this.updatePoseWithLimelight();
     this.displayDrivetrainPose();
+    this.updateRobotVelocity();
   }
 
   /**
@@ -212,6 +217,19 @@ public class Drivetrain extends SubsystemBase {
    */
   public void setDrivetrainPose(Pose2d pose) {
     this.poseEstimator.resetPosition(getGyroRotation(), getModulePositions(), pose);
+  }
+
+  private void updateRobotVelocity() {
+    Pose2d currentPose = this.getPose();
+    double currentTime = System.currentTimeMillis() / 1000.0;
+    double timeDifference = currentTime - this.robotVelocity[2];
+    double[] newPosition = {currentPose.getX(), currentPose.getY(), currentTime};
+    this.robotVelocity = new double[]{(newPosition[0] - oldPosition[0]) / timeDifference, (newPosition[1] - oldPosition[1]) / timeDifference};
+    this.oldPosition = newPosition;
+  }
+
+  public double[] getDrivetrainVelocity() {
+    return this.robotVelocity;
   }
 
   /**
