@@ -27,7 +27,7 @@ public class Climber extends SubsystemBase{
 
         encoder = leftMotor.getEncoder();
         encoder.setPositionConversionFactor(ClimberConstants.positionConversionRate);
-        encoder.setVelocityConversionFactor(ClimberConstants.positionConversionRate/this.encoder.getMeasurementPeriod());
+        encoder.setVelocityConversionFactor(ClimberConstants.positionConversionRate/(60*this.encoder.getMeasurementPeriod()));
     }
 
     public void setVoltage (double voltage) {
