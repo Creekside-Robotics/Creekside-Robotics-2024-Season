@@ -6,7 +6,8 @@ package frc.robot.commands.drivetrain;
 
 import java.util.function.Supplier;
 
-import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,21 +16,12 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.DriverController;
 
 public class DriveToPosePID extends Command {
-  private ProfiledPIDController xController = new ProfiledPIDController(
-    DrivetrainConstants.translationKP, 
-    0.0, 
-    0.0, 
-    DrivetrainConstants.translationConstraints);
-  private ProfiledPIDController yController = new ProfiledPIDController(
-    DrivetrainConstants.translationKP, 
-    0.0,
-    0.0, 
-    DrivetrainConstants.translationConstraints);
-  private ProfiledPIDController rotController = new ProfiledPIDController(
-    DrivetrainConstants.rotationKP, 
-    0.0,
-    0.0,  
-    DrivetrainConstants.rotationalConstraints);
+  private PIDController xController = new PIDController(DrivetrainConstants.translationKP, 0,
+      DrivetrainConstants.translationKD);
+  private PIDController yController = new PIDController(DrivetrainConstants.translationKP, 0,
+      DrivetrainConstants.translationKD);
+  private PIDController rotController = new PIDController(DrivetrainConstants.rotationKP, 0,
+      DrivetrainConstants.rotationKD);
 
   private Drivetrain drivetrain;
   private DriverController driverController;
@@ -118,7 +110,7 @@ public class DriveToPosePID extends Command {
   @Override
   public void execute() {
     ChassisSpeeds pidOutput = getPIDChassisSpeeds();
-    ChassisSpeeds driverOutput = this.driverController.getDrivetrainOutput(true);
+    ChassisSpeeds driverOutput = this.driverController.getDrivetrainOutput();
     this.drivetrain.setDrivetrainOutput(fuseOutputSpeeds(pidOutput, driverOutput), true);
   }
 
@@ -129,10 +121,13 @@ public class DriveToPosePID extends Command {
    */
   private ChassisSpeeds getPIDChassisSpeeds() {
     return new ChassisSpeeds(
-        xController.calculate(drivetrain.getPose().getX() - targetPose.getX(), 0) + xController.getSetpoint().velocity,
-        yController.calculate(drivetrain.getPose().getY() - targetPose.getY(), 0) + yController.getSetpoint().velocity,
-        rotController.calculate(drivetrain.getPose().getRotation().minus(targetPose.getRotation()).getRadians(), 0) + rotController.getSetpoint().velocity
-    );
+        MathUtil.clamp(xController.calculate(drivetrain.getPose().getX() - targetPose.getX(), 0),
+            -DrivetrainConstants.translationMaxVelocity, DrivetrainConstants.translationMaxVelocity),
+        MathUtil.clamp(yController.calculate(drivetrain.getPose().getY() - targetPose.getY(), 0),
+            -DrivetrainConstants.translationMaxVelocity, DrivetrainConstants.translationMaxVelocity),
+        MathUtil.clamp(
+            rotController.calculate(drivetrain.getPose().getRotation().minus(targetPose.getRotation()).getRadians(), 0),
+            -DrivetrainConstants.rotationMaxVelocity, DrivetrainConstants.rotationMaxVelocity));
   }
 
   /**
@@ -168,8 +163,8 @@ public class DriveToPosePID extends Command {
   @Override
   public boolean isFinished() {
     return !hold
-        && (this.xController.atGoal() || !this.usePID[0])
-        && (this.yController.atGoal() || !this.usePID[1])
-        && (this.rotController.atGoal() || !this.usePID[2]);
+        && (this.xController.atSetpoint() || !this.usePID[0])
+        && (this.yController.atSetpoint() || !this.usePID[1])
+        && (this.rotController.atSetpoint() || !this.usePID[2]);
   }
 }
