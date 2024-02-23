@@ -18,7 +18,7 @@ public class DriveToAmp extends DriveToPosePID{
             driverController, 
             () -> FieldConstants.tranformPoseBluePose(FieldConstants.amp), 
             new boolean[]{true, true, true}, 
-            new Pose2d(0.03, 0.03, new Rotation2d(0.03)),
+            new Pose2d(0.01, 0.01, new Rotation2d(0.01)),
             false
         );
     }

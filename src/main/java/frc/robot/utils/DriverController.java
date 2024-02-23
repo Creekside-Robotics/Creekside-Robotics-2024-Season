@@ -41,8 +41,8 @@ public class DriverController extends XboxController {
         buttons.put("Y", new JoystickButton(this, 4));
         buttons.put("L", new JoystickButton(this, 5));
         buttons.put("R", new JoystickButton(this, 6));
-        buttons.put("B", new JoystickButton(this, 7));
-        buttons.put("S", new JoystickButton(this, 8));
+        buttons.put("BA", new JoystickButton(this, 7));
+        buttons.put("ST", new JoystickButton(this, 8));
     }
 
     /**

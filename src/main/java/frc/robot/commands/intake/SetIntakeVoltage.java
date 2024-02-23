@@ -5,6 +5,7 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
 public class SetIntakeVoltage extends Command {
@@ -32,7 +33,9 @@ public class SetIntakeVoltage extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    this.intake.setVoltage(IntakeConstants.idleVoltage);
+  }
 
   // Returns true when the command should end.
   @Override
