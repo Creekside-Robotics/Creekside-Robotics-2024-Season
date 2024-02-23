@@ -23,6 +23,7 @@ import frc.robot.commands.shooter.RevShooter;
 import frc.robot.commands.shooter.SetShooterVoltage;
 import frc.robot.commands.tower.RetractTower;
 import frc.robot.commands.tower.SetAmpTower;
+import frc.robot.commands.tower.SetIntakeTower;
 import frc.robot.commands.tower.SetPickupTower;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -99,7 +100,14 @@ public class RobotContainer {
         );
 
         this.mainController.buttons.get("A").whileTrue(
-            new IntakeNote(intake)
+            new ParallelCommandGroup(
+                new IntakeNote(intake),
+                new SetIntakeTower(elevator, tilt)
+            )
+        );
+
+        this.mainController.buttons.get("A").onFalse(
+            new RetractTower(elevator, tilt)
         );
 
         this.mainController.buttons.get("X").whileTrue(

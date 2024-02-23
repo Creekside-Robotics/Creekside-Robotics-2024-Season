@@ -28,9 +28,7 @@ public class Tilt extends SubsystemBase {
   private CANSparkMax rightMotor = new CANSparkMax(DeviceIds.tiltRight, MotorType.kBrushless);
 
   private RelativeEncoder encoder;
-
-  private double goalPosition = TiltConstants.upperLimit;
-
+  
 
   public Tilt() {
     leftMotor.setInverted(true);
@@ -45,16 +43,17 @@ public class Tilt extends SubsystemBase {
     encoder.setPosition(TiltConstants.upperLimit);
 
     tiltController.setTolerance(TiltConstants.tolerance);
+    tiltController.setSetpoint(TiltConstants.upperLimit);
   }
 
   @Override
   public void periodic() {
     setVoltage(
       MathUtil.clamp(
-        tiltController.calculate(encoder.getPosition(), goalPosition), 
+        tiltController.calculate(encoder.getPosition()), 
         -TiltConstants.maxVoltage, 
         TiltConstants.maxVoltage
-      ) + TiltConstants.kS * Math.sin(encoder.getPosition() - Math.PI / 4.0)
+      ) + TiltConstants.kS * Math.sin(encoder.getPosition() - TiltConstants.hangingAngle)
     );
     SmartDashboard.putNumber("Tilt Position", this.encoder.getPosition());
   }
@@ -65,7 +64,11 @@ public class Tilt extends SubsystemBase {
   }
 
   public void setPosition(double position) {
-    goalPosition = position;
+    if (position > TiltConstants.hangingAngle) {
+      tiltController.setSetpoint(position + TiltConstants.backlashAngle);
+    } else {
+      tiltController.setSetpoint(position);
+    }
   }
 
   public boolean atPosition() {

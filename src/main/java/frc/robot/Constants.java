@@ -88,7 +88,7 @@ public final class Constants {
 
     public static double translationKP = 6;
     public static double translationKD = 0.5;
-    public static double rotationKP = 10;
+    public static double rotationKP = 6;
     public static double rotationKD = 0.5;
 
     public static double frontLeftEncoderOffset = Math.toRadians(-89.82) - Math.PI / 2.0;
@@ -114,7 +114,7 @@ public final class Constants {
     public static double pI = 0;
     public static double pD = 0.0;
 
-    public static double kS = 0.5;
+    public static double kS = 0.25;
 
     public static double maxVoltage = 10;
 
@@ -132,19 +132,22 @@ public final class Constants {
     public static double ampAngle = Math.PI / 8.0;
     public static double pickupAngle = - Math.PI / 4;
 
-    public static double pP = 6;
+    public static double hangingAngle = Math.PI / 4.0;
+    public static double backlashAngle = 1.0 / 10.0;
+
+    public static double pP = 4;
     public static double pI = 0;
     public static double pD = 0.5;
 
-    public static double kS = 1.0;
+    public static double kS = 0.1;
     
     public static double maxVoltage = 8.0;
 
-    public static double tolerance = 0.10;
+    public static double tolerance = 0.05;
 
-    public static double conversionFactor = 0.1047;
+    public static double conversionFactor = 0.1047 * 60.0 / 125.0;
 
-    public static int currentLimit = 30;
+    public static int currentLimit = 10;
   }
 
   public static class ClimberConstants {
@@ -158,7 +161,7 @@ public final class Constants {
 
   public static class ShooterConstants {
     public static double idleVoltage = 0.0;
-    public static double shootingVoltage = 10.0;
+    public static double shootingVoltage = 0.0;
 
     public static double revtime = 1.5;
 
@@ -197,12 +200,12 @@ public final class Constants {
     public static double speakerHeight = 2.032;
 
     public static Pose2d speaker = new Pose2d(1.40,5.60,new Rotation2d(-90.00));
-    public static Pose2d amp = new Pose2d(1.85,7.25,new Rotation2d(Math.PI/2));
+    public static Pose2d amp = new Pose2d(1.83, 7.69, new Rotation2d(Math.PI / 2.0));
     public static Pose2d pickup = new Pose2d(15.15,1.60,new Rotation2d(30.00));
 
-    public static Pose2d chainLeft = new Pose2d(4.00,5.50,new Rotation2d(30.00));
-    public static Pose2d chainRight = new Pose2d(4.00,2.65,new Rotation2d(-30.00));
-    public static Pose2d chainBack = new Pose2d(6.40,4.10,new Rotation2d(90.00));
+    public static Pose2d chainLeft = new Pose2d(4.00,5.50,new Rotation2d(Math.PI * 2.0 / 3.0));
+    public static Pose2d chainRight = new Pose2d(4.00,2.65,new Rotation2d(-Math.PI * 2.0 / 3.0));
+    public static Pose2d chainBack = new Pose2d(6.40,4.10,new Rotation2d(0.0));
 
     public static Pose2d[] climbPositions = {chainLeft, chainRight, chainBack};
 
