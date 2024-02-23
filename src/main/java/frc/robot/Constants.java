@@ -88,7 +88,7 @@ public final class Constants {
 
     public static double translationKP = 6;
     public static double translationKD = 0.5;
-    public static double rotationKP = 10;
+    public static double rotationKP = 6;
     public static double rotationKD = 0.5;
 
     public static double frontLeftEncoderOffset = Math.toRadians(-89.82) - Math.PI / 2.0;
@@ -114,7 +114,7 @@ public final class Constants {
     public static double pI = 0;
     public static double pD = 0.0;
 
-    public static double kS = 0.5;
+    public static double kS = 0.25;
 
     public static double maxVoltage = 10;
 
@@ -133,25 +133,26 @@ public final class Constants {
     public static double pickupAngle = - Math.PI / 4;
 
     public static double hangingAngle = Math.PI / 4.0;
+    public static double backlashAngle = 1.0 / 10.0;
 
-    public static double pP = 6;
+    public static double pP = 4;
     public static double pI = 0;
     public static double pD = 0.5;
 
-    public static double kS = 1.0;
+    public static double kS = 0.1;
     
     public static double maxVoltage = 8.0;
 
-    public static double tolerance = 0.10;
+    public static double tolerance = 0.05;
 
-    public static double conversionFactor = 0.1047;
+    public static double conversionFactor = 0.1047 * 60.0 / 125.0;
 
-    public static int currentLimit = 30;
+    public static int currentLimit = 10;
   }
 
   public static class ShooterConstants {
     public static double idleVoltage = 0.0;
-    public static double shootingVoltage = 10.0;
+    public static double shootingVoltage = 0.0;
 
     public static double revtime = 1.5;
 

@@ -43,7 +43,7 @@ public class Tilt extends SubsystemBase {
     encoder.setPosition(TiltConstants.upperLimit);
 
     tiltController.setTolerance(TiltConstants.tolerance);
-    this.setPosition(TiltConstants.upperLimit);
+    tiltController.setSetpoint(TiltConstants.upperLimit);
   }
 
   @Override
@@ -64,7 +64,11 @@ public class Tilt extends SubsystemBase {
   }
 
   public void setPosition(double position) {
-    tiltController.setSetpoint(position);
+    if (position > TiltConstants.hangingAngle) {
+      tiltController.setSetpoint(position + TiltConstants.backlashAngle);
+    } else {
+      tiltController.setSetpoint(position);
+    }
   }
 
   public boolean atPosition() {

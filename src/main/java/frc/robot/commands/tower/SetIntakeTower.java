@@ -10,8 +10,9 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Tilt;
 
 /** Add your docs here. */
-public class RetractTower extends SetTowerPosition {
-    public RetractTower(Elevator elevator, Tilt tilt) {
-        super(elevator, tilt, ElevatorConstants.shootPosition, TiltConstants.upperLimit);
+public class SetIntakeTower extends SetTowerPosition {
+
+    public SetIntakeTower(Elevator elevator, Tilt tilt) {
+        super(elevator, tilt, ElevatorConstants.lowerHeightLimit, TiltConstants.upperLimit);
     }
 }
