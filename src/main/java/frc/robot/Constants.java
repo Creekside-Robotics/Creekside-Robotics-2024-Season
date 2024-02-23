@@ -147,6 +147,15 @@ public final class Constants {
     public static int currentLimit = 30;
   }
 
+  public static class ClimberConstants {
+    public static double extendVoltage = 8; /* Figure out optimal voltage */
+    public static double retractVoltage = -12; /* Figure out optimal voltage */
+    
+    public static int currentLimit = 10; /* Check the limit */
+
+    public static double positionConversionRate = 0.0066; /* 1/((Counts per revolution * gear ratio)/(pi*pulley diameter) * length of travel) */
+  }
+
   public static class ShooterConstants {
     public static double idleVoltage = 0.0;
     public static double shootingVoltage = 10.0;
