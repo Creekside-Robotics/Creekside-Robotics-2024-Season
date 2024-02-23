@@ -28,8 +28,6 @@ public class Elevator extends SubsystemBase {
 
   private RelativeEncoder encoder;
 
-  private double goalPosition = ElevatorConstants.lowerHeightLimit;
-
 
   public Elevator() {
     leftMotor.setInverted(true);
@@ -42,13 +40,14 @@ public class Elevator extends SubsystemBase {
     encoder.setPosition(ElevatorConstants.lowerHeightLimit);
 
     elevatorController.setTolerance(ElevatorConstants.tolerance);
+    elevatorController.setSetpoint(ElevatorConstants.lowerHeightLimit);
   }
 
   @Override
   public void periodic() {
     setVoltage(
       MathUtil.clamp(
-        elevatorController.calculate(encoder.getPosition(), goalPosition), 
+        elevatorController.calculate(encoder.getPosition()), 
         -ElevatorConstants.maxVoltage, 
         ElevatorConstants.maxVoltage
       ) + ElevatorConstants.kS
@@ -62,7 +61,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public void setPosition(double position) {
-    goalPosition = position;
+    elevatorController.setSetpoint(position);
   }
 
   public boolean atPosition() {
