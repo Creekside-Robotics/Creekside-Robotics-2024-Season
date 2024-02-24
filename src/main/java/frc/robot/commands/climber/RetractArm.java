@@ -6,7 +6,6 @@ package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Hook;
 
 public class RetractArm extends Command{
@@ -40,7 +39,6 @@ public class RetractArm extends Command{
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (this.hook.getPosition() <= 0) return true;
-        return this.hook.getVelocity() >= 0 && this.hook.getPosition()<=0;
+        return this.hook.getPosition() <= 0.0 || this.hook.getVelocity() >= 0;
     }
 }

@@ -24,10 +24,10 @@ public class Climber extends SubsystemBase{
     @Override
     public void periodic() {
         // Left logs
-        SmartDashboard.putNumber("LeftHookPosition", leftHook.getPosition());
-        SmartDashboard.putNumber("LeftHookVelocity", leftHook.getVelocity());
+        SmartDashboard.putNumber("Left Hook Position", leftHook.getPosition());
+        SmartDashboard.putNumber("Left Hook Velocity", leftHook.getVelocity());
         // Right logs
-        SmartDashboard.putNumber("RightHookPosition", rightHook.getPosition());
-        SmartDashboard.putNumber("RightHookVelocity", rightHook.getVelocity());
+        SmartDashboard.putNumber("Right Hook Position", rightHook.getPosition());
+        SmartDashboard.putNumber("Right Hook Velocity", rightHook.getVelocity());
     }
 }

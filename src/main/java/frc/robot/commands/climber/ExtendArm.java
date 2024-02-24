@@ -6,7 +6,6 @@ package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Hook;
 
 // public class ExtendArms extends Command {
@@ -64,12 +63,12 @@ public class ExtendArm extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        this.hook.setVoltage(0);
+        this.hook.setVoltage(0.0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return this.hook.getPosition()>=1;
+        return this.hook.getPosition() >= 1;
     }
 }
