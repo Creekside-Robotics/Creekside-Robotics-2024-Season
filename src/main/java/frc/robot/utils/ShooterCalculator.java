@@ -13,9 +13,9 @@ import frc.robot.Constants.ElevatorConstants;
 /** Add your docs here. */
 public class ShooterCalculator {
     private Drivetrain drivetrain;
-    private double shootSpeed = 15.0;
+    private double shootSpeed = 10.0;
     private double gravity = 9.8;
-    private double timeDelay = 0.10;
+    private double timeDelay = 0.20;
 
     public ShooterCalculator(Drivetrain drivetrain){
         this.drivetrain = drivetrain;

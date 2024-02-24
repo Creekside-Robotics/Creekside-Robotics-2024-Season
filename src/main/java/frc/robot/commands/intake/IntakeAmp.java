@@ -16,6 +16,6 @@ public class IntakeAmp extends ParallelRaceGroup {
   public IntakeAmp(Intake intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new SetIntakeVoltage(intake, IntakeConstants.exitVoltage).withTimeout(IntakeConstants.ampTime));
+    addCommands(new SetIntakeVoltageCurved(intake, IntakeConstants.exitVoltage).withTimeout(IntakeConstants.ampTime));
   }
 }

@@ -49,8 +49,13 @@ public class Intake extends SubsystemBase {
     rightMotor.setVoltage(voltage);
   }
 
+  public void setCurvedVoltage(double voltage) {
+    leftMotor.setVoltage(voltage);
+    rightMotor.setVoltage(voltage / 2.0);
+  }
+
   public boolean notePresent() {
-    boolean getProximity = colorSensor.getRed() > 50;
+    boolean getProximity = colorSensor.getRed() > 70;
     return getProximity;
   }
 }

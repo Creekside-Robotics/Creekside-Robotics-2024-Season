@@ -96,8 +96,8 @@ public final class Constants {
     public static double backLeftEncoderOffset = Math.toRadians(-80.069) - Math.PI / 2.0;
     public static double backRightEncoderOffset = Math.toRadians(-88.330) + Math.PI / 2.0;
 
-    public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.02, 0.02, Math.PI / 30.0);
-    public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.8, 0.8, Math.PI / 2.0);
+    public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.005, 0.005, 0.01);
+    public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.5, 0.5, 1.0);
 
     public static double adjustmentSpeed = 0.5;
   }
@@ -106,7 +106,7 @@ public final class Constants {
     public static double lowerHeightLimit = 0.375;
     public static double upperHeightLimit = 0.914;
 
-    public static double ampPosition = 0.94;
+    public static double ampPosition = 0.95;
     public static double shootPosition = 0.609;
     public static double pickupPosition = 0.550;
 
@@ -114,7 +114,7 @@ public final class Constants {
     public static double pI = 0;
     public static double pD = 0.0;
 
-    public static double kS = 0.25;
+    public static double kS = 0.5;
 
     public static double maxVoltage = 10;
 
@@ -129,21 +129,21 @@ public final class Constants {
     public static double lowerLimit = -Math.PI / 3.0;
     public static double upperLimit = Math.PI / 3.0;
 
-    public static double ampAngle = Math.PI / 8.0;
+    public static double ampAngle = Math.PI / 12.0;
     public static double pickupAngle = - Math.PI / 4;
 
     public static double hangingAngle = Math.PI / 4.0;
     public static double backlashAngle = 1.0 / 10.0;
 
-    public static double pP = 4;
+    public static double pP = 10;
     public static double pI = 0;
-    public static double pD = 0.5;
-
-    public static double kS = 0.1;
+    public static double pD = 0.00;
+    
+    public static double kS = 0.0;
     
     public static double maxVoltage = 8.0;
 
-    public static double tolerance = 0.05;
+    public static double tolerance = 0.03;
 
     public static double conversionFactor = 0.1047 * 60.0 / 125.0;
 
@@ -152,7 +152,7 @@ public final class Constants {
 
   public static class ClimberConstants {
     public static double extendVoltage = 8; /* Figure out optimal voltage */
-    public static double retractVoltage = -12; /* Figure out optimal voltage */
+    public static double retractVoltage = -8; /* Figure out optimal voltage */
     
     public static int currentLimit = 10; /* Check the limit */
 
@@ -161,7 +161,7 @@ public final class Constants {
 
   public static class ShooterConstants {
     public static double idleVoltage = 0.0;
-    public static double shootingVoltage = 0.0;
+    public static double shootingVoltage = 10.0;
 
     public static double revtime = 1.5;
 
@@ -170,7 +170,7 @@ public final class Constants {
 
   public static class IntakeConstants {
     public static double idleVoltage = 0.0;
-    public static double intakeVoltage = 8.0;
+    public static double intakeVoltage = 6.0;
     public static double exitVoltage = -10.0;
 
     public static double shootTime = 0.75;

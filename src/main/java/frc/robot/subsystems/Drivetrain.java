@@ -62,6 +62,7 @@ public class Drivetrain extends SubsystemBase {
    */
   public Drivetrain() {
     this.configureSwerveModules();
+    this.gyro.calibrate();
     this.poseEstimator = new SwerveDrivePoseEstimator(
         drivetrainKinematics,
         getGyroRotation(),
@@ -202,12 +203,16 @@ public class Drivetrain extends SubsystemBase {
    *         backRight}
    */
   private SwerveModulePosition[] getModulePositions() {
-    return new SwerveModulePosition[] {
-        this.frontLeft.getPosition(),
-        this.frontRight.getPosition(),
-        this.backLeft.getPosition(),
-        this.backRight.getPosition()
-    };
+    SwerveModule[] modules = {this.frontLeft, this.frontRight, this.backLeft, this.backRight};
+    SwerveModulePosition[] positions = {null, null, null, null};
+
+    for(int i = 0; i < modules.length; i++) {
+      positions[i] = new SwerveModulePosition(
+        modules[i].getPosition().distanceMeters * 48.00 / 46.45,
+        modules[i].getPosition().angle
+      );
+    }
+    return positions;
   }
 
   /**

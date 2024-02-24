@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.Intake;
 
-public class IntakeNote extends Command {
-  /** Creates a new RunUntilGamePiece. */
-private Intake intake;
+public class SetIntakeVoltageCurved extends Command {
+  /** Creates a new SetIntakeVoltage. */
+  private Intake intake;
+  private double voltage;
 
-  public IntakeNote(Intake intake) {
+  public SetIntakeVoltageCurved(Intake intake, double voltage) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.voltage = voltage;
     this.intake = intake;
 
     addRequirements(this.intake);
@@ -26,18 +28,18 @@ private Intake intake;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setVoltage(IntakeConstants.intakeVoltage);
+    this.intake.setCurvedVoltage(voltage);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    this.intake.setVoltage(0.0);
+    this.intake.setVoltage(IntakeConstants.idleVoltage);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return this.intake.notePresent();
+    return false;
   }
 }
