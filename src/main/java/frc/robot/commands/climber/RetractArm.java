@@ -7,17 +7,18 @@ package frc.robot.commands.climber;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Hook;
 
-public class ExtendArms extends Command {
+public class RetractArm extends Command{
     /* Figure out encoder's position output to determine further branching*/
 
-    private Climber climber;
+    private Hook hook;
 
-    public ExtendArms(Climber climber){
+    public RetractArm(Hook hook){
         // Use addRequirements() here to declare subsystem dependencies.
-        this.climber = climber;
-
-        addRequirements(this.climber);
+        this.hook = hook;
+        
+        addRequirements(this.hook);
     }
 
      // Called when the command is initially scheduled.
@@ -27,18 +28,19 @@ public class ExtendArms extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        this.climber.setVoltage(ClimberConstants.extendVoltage);
+        this.hook.setVoltage(ClimberConstants.retractVoltage);        
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        this.climber.setVoltage(0);
+        this.hook.setVoltage(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return this.climber.getPosition()>=1;
+        if (this.hook.getPosition() <= 0) return true;
+        return this.hook.getVelocity() >= 0 && this.hook.getPosition()<=0;
     }
 }

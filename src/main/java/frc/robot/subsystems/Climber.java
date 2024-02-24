@@ -4,58 +4,30 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DeviceIds;
-import frc.robot.Constants.ClimberConstants;
 
 public class Climber extends SubsystemBase{
     /** Creates a new Climber **/
-    private CANSparkMax leftMotor = new CANSparkMax(DeviceIds.climberLeft, MotorType.kBrushless);
-    private CANSparkMax rightMotor = new CANSparkMax(DeviceIds.climberRight, MotorType.kBrushless);
 
-    private RelativeEncoder encoder;
+    public Hook leftHook = new Hook(DeviceIds.climberLeft);
+    public Hook rightHook = new Hook(DeviceIds.climberRight);
     
-    public Climber(){
-        leftMotor.setInverted(false);
-        rightMotor.setInverted(false);
-        leftMotor.setSmartCurrentLimit(ClimberConstants.currentLimit);
-        rightMotor.setSmartCurrentLimit(ClimberConstants.currentLimit);
-
-        encoder = leftMotor.getEncoder();
-        encoder.setPositionConversionFactor(ClimberConstants.positionConversionRate);
-        encoder.setVelocityConversionFactor(ClimberConstants.positionConversionRate/(60.0));
-        encoder.setPosition(1.0);
-    }
+    public Climber(){}
 
     public void setVoltage (double voltage) {
-        leftMotor.setVoltage(voltage);
-        rightMotor.setVoltage(voltage);
+        leftHook.setVoltage(voltage);
+        rightHook.setVoltage(voltage);
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("ClimberPosition", encoder.getPosition());
-        SmartDashboard.putNumber("ClimberVelocity", encoder.getVelocity());
-    }
-
-    public double getPosition() {
-        /** 
-         * 1 - extended
-         * 0 - retracted 
-        **/
-
-        double position = encoder.getPosition();
-        if (position >= 1) return 1;
-        else if (position <= 0) return 0;
-        else return position;
-    }
-
-    public double getVelocity() {
-        return this.encoder.getVelocity();
+        // Left logs
+        SmartDashboard.putNumber("LeftHookPosition", leftHook.getPosition());
+        SmartDashboard.putNumber("LeftHookVelocity", leftHook.getVelocity());
+        // Right logs
+        SmartDashboard.putNumber("RightHookPosition", rightHook.getPosition());
+        SmartDashboard.putNumber("RightHookVelocity", rightHook.getVelocity());
     }
 }
