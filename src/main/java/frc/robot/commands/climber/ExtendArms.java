@@ -13,7 +13,7 @@ public class ExtendArms extends Command {
 
     private Climber climber;
 
-    public ExtendArms(){
+    public ExtendArms(Climber climber){
         // Use addRequirements() here to declare subsystem dependencies.
         this.climber = climber;
 
@@ -32,11 +32,13 @@ public class ExtendArms extends Command {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        this.climber.setVoltage(0);
+    }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return this.climber.getPosition()==1;
+        return this.climber.getPosition()>=1;
     }
 }

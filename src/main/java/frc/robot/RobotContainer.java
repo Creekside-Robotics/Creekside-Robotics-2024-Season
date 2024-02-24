@@ -25,11 +25,14 @@ import frc.robot.commands.tower.RetractTower;
 import frc.robot.commands.tower.SetAmpTower;
 import frc.robot.commands.tower.SetIntakeTower;
 import frc.robot.commands.tower.SetPickupTower;
+import frc.robot.commands.climber.ExtendArms;
+import frc.robot.commands.climber.RetractArms;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilt;
+import frc.robot.subsystems.Climber;
 import frc.robot.utils.DriverController;
 import frc.robot.utils.ShooterCalculator;
 
@@ -49,6 +52,7 @@ public class RobotContainer {
     private final Intake intake = new Intake();
     private final Elevator elevator = new Elevator();
     private final Tilt tilt = new Tilt();
+    private final Climber climber = new Climber();
 
     private final DriverController mainController = new DriverController(Constants.DeviceIds.driverController);
     private final DriverController alternateController = new DriverController(Constants.DeviceIds.alternateController);
@@ -119,6 +123,14 @@ public class RobotContainer {
         );
         this.mainController.buttons.get("X").onFalse(
             new RetractTower(elevator, tilt)
+        );
+
+        this.mainController.buttons.get("L").whileTrue(
+            new ExtendArms(climber)
+        );
+
+        this.mainController.buttons.get("R").whileTrue(
+            new RetractArms(climber)
         );
 
         this.alternateController.buttons.get("B").whileTrue(

@@ -156,7 +156,7 @@ public final class Constants {
     
     public static int currentLimit = 10; /* Check the limit */
 
-    public static double positionConversionRate = 0.0066; /* 1/((Counts per revolution * gear ratio)/(pi*pulley diameter) * length of travel) */
+    public static double positionConversionRate = 0.0022; /* 1/((Counts per revolution * gear ratio)/(pi*pulley diameter) * length of travel) */
   }
 
   public static class ShooterConstants {

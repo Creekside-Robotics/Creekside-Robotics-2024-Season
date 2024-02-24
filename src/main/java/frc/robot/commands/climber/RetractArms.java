@@ -4,18 +4,16 @@
 
 package frc.robot.commands.climber;
 
-import java.lang.reflect.Array;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
 
-public class RetractHooks extends Command{
+public class RetractArms extends Command{
     /* Figure out encoder's position output to determine further branching*/
 
     private Climber climber;
 
-    public RetractHooks(){
+    public RetractArms(Climber climber){
         // Use addRequirements() here to declare subsystem dependencies.
         this.climber = climber;
         
@@ -34,11 +32,14 @@ public class RetractHooks extends Command{
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        this.climber.setVoltage(0);
+    }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return this.climber.getVelocity() <= 0;
+        if (this.climber.getPosition() <= 0) return true;
+        return this.climber.getVelocity() >= 0 && this.climber.getPosition()<=0;
     }
 }

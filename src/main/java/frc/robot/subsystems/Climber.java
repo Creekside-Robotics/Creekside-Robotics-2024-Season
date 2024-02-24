@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DeviceIds;
 import frc.robot.Constants.ClimberConstants;
@@ -27,12 +28,19 @@ public class Climber extends SubsystemBase{
 
         encoder = leftMotor.getEncoder();
         encoder.setPositionConversionFactor(ClimberConstants.positionConversionRate);
-        encoder.setVelocityConversionFactor(ClimberConstants.positionConversionRate/(60*this.encoder.getMeasurementPeriod()));
+        encoder.setVelocityConversionFactor(ClimberConstants.positionConversionRate/(60.0));
+        encoder.setPosition(1.0);
     }
 
     public void setVoltage (double voltage) {
         leftMotor.setVoltage(voltage);
         rightMotor.setVoltage(voltage);
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("ClimberPosition", encoder.getPosition());
+        SmartDashboard.putNumber("ClimberVelocity", encoder.getVelocity());
     }
 
     public double getPosition() {
