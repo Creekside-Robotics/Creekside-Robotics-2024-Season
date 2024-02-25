@@ -55,7 +55,7 @@ public class ShooterCalculator {
     public double[] targetPositionDifference(){
         double[] currentVelocity = this.drivetrain.getDrivetrainVelocity();
         double[] targetPosition = new double[]{
-            FieldConstants.tranformPoseBluePose(FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition)).getX() - currentVelocity[0] * shotTime(),
+            FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition).getX() - currentVelocity[0] * shotTime(),
             FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition).getY() - currentVelocity[1] * shotTime()
         };
 
