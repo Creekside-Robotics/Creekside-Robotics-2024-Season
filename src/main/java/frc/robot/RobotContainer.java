@@ -133,7 +133,8 @@ public class RobotContainer {
         this.mainController.buttons.get("R").whileTrue(
             new ParallelCommandGroup(
                 new RetractArm(climber.leftHook),
-                new RetractArm(climber.rightHook)
+                new RetractArm(climber.rightHook),
+                new SetIntakeTower(elevator, tilt)
             )
         );
 

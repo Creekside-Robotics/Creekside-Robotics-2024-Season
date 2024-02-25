@@ -13,9 +13,9 @@ import frc.robot.Constants.ElevatorConstants;
 /** Add your docs here. */
 public class ShooterCalculator {
     private Drivetrain drivetrain;
-    private double shootSpeed = 10.0;
+    private double shootSpeed = 15.0;
     private double gravity = 9.8;
-    private double timeDelay = 0.20;
+    private double timeDelay = 0.25;
 
     public ShooterCalculator(Drivetrain drivetrain){
         this.drivetrain = drivetrain;
@@ -33,8 +33,8 @@ public class ShooterCalculator {
 
     public double shotDistance() {
         return Math.hypot(
-            getMovedPosition()[0] - FieldConstants.speakerPosition.getX(),
-            getMovedPosition()[1] - FieldConstants.speakerPosition.getY()
+            getMovedPosition()[0] - FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition).getX(),
+            getMovedPosition()[1] - FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition).getY()
         );
     }
 
@@ -55,8 +55,8 @@ public class ShooterCalculator {
     public double[] targetPositionDifference(){
         double[] currentVelocity = this.drivetrain.getDrivetrainVelocity();
         double[] targetPosition = new double[]{
-            FieldConstants.speakerPosition.getX() - currentVelocity[0] * shotTime(),
-            FieldConstants.speakerPosition.getY() - currentVelocity[1] * shotTime()
+            FieldConstants.tranformPoseBluePose(FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition)).getX() - currentVelocity[0] * shotTime(),
+            FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition).getY() - currentVelocity[1] * shotTime()
         };
 
         return new double[]{

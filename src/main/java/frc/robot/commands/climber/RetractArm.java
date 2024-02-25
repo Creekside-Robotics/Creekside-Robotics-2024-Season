@@ -39,6 +39,6 @@ public class RetractArm extends Command{
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return this.hook.getPosition() <= 0.0 || this.hook.getVelocity() >= 0;
+        return false;
     }
 }

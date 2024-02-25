@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -139,7 +138,7 @@ public final class Constants {
     public static double pI = 0;
     public static double pD = 0.00;
     
-    public static double kS = 0.0;
+    public static double kS = 0.5;
     
     public static double maxVoltage = 8.0;
 
@@ -160,7 +159,7 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    public static double idleVoltage = 0.0;
+    public static double idleVoltage = 2.0;
     public static double shootingVoltage = 10.0;
 
     public static double revtime = 1.5;
@@ -234,13 +233,13 @@ public final class Constants {
     }
 
     public static Pose2d[] transformBluePoses(Pose2d[] bluePoses) {
-      ArrayList<Pose2d> tranformedPoses = new ArrayList<Pose2d>();
+      Pose2d[] tranformedPoses = bluePoses.clone();
 
-      for (Pose2d pose : bluePoses) {
-        tranformedPoses.add(tranformPoseBluePose(pose));
+      for (int i = 0; i < bluePoses.length; i++) {
+        tranformedPoses[i] = tranformPoseBluePose(bluePoses[i]);
       }
 
-      return (Pose2d[]) tranformedPoses.toArray();
+      return tranformedPoses;
     }
   }
 

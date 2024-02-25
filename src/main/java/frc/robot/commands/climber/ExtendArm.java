@@ -69,6 +69,6 @@ public class ExtendArm extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return this.hook.getPosition() >= 1;
+        return false;
     }
 }
