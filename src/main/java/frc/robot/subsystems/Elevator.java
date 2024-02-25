@@ -8,7 +8,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DeviceIds;
 import frc.robot.Constants.ElevatorConstants;
@@ -26,8 +28,6 @@ public class Elevator extends SubsystemBase {
 
   private RelativeEncoder encoder;
 
-  private double goalPosition = ElevatorConstants.lowerHeightLimit;
-
 
   public Elevator() {
     leftMotor.setInverted(true);
@@ -35,16 +35,25 @@ public class Elevator extends SubsystemBase {
     leftMotor.setSmartCurrentLimit(ElevatorConstants.currentLimit);
     rightMotor.setSmartCurrentLimit(ElevatorConstants.currentLimit);
 
-    encoder = leftMotor.getEncoder();
+    encoder = rightMotor.getEncoder();
     encoder.setPositionConversionFactor(ElevatorConstants.conversionFactor);
-    encoder.setPosition(ElevatorConstants.lowerHeightLimit);
+    encoder.setPosition(ElevatorConstants.lowerHeightLimit - 0.01);
+
+    elevatorController.setTolerance(ElevatorConstants.tolerance);
+    elevatorController.setSetpoint(ElevatorConstants.lowerHeightLimit);
+    this.setPosition(ElevatorConstants.lowerHeightLimit);
   }
 
   @Override
   public void periodic() {
     setVoltage(
-      elevatorController.calculate(encoder.getPosition(), goalPosition) + ElevatorConstants.kS
+      MathUtil.clamp(
+        elevatorController.calculate(encoder.getPosition()), 
+        -ElevatorConstants.maxVoltage, 
+        ElevatorConstants.maxVoltage
+      ) + ElevatorConstants.kS
     );
+    SmartDashboard.putNumber("Elevator Position", this.encoder.getPosition());
   }
 
   private void setVoltage(double voltage) {
@@ -53,7 +62,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public void setPosition(double position) {
-    goalPosition = position;
+    elevatorController.setSetpoint(position);
   }
 
   public boolean atPosition() {

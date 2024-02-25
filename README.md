@@ -1,4 +1,4 @@
-# FRC 8775 Robotics - 2023 Offseason Code
+# FRC 8775 Robotics - 2024 Code
 This repository maintains our robot's 2024 code.
 
 ## Necessary Software

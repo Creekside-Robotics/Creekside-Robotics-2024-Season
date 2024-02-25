@@ -52,12 +52,17 @@ public class Drivetrain extends SubsystemBase {
 
   private final Field2d field2d = new Field2d();
 
+  private double[] robotVelocity = {0.0, 0.0};
+  private double[] oldPosition = {0.0, 0.0, 0.0};
+
+
   /**
    * Creates a new drivetrain object. Represents a four corner swerve drive
    * with odometry using encoder/Limelight fused data.
    */
   public Drivetrain() {
     this.configureSwerveModules();
+    this.gyro.calibrate();
     this.poseEstimator = new SwerveDrivePoseEstimator(
         drivetrainKinematics,
         getGyroRotation(),
@@ -115,6 +120,7 @@ public class Drivetrain extends SubsystemBase {
     this.poseEstimator.update(getGyroRotation(), getModulePositions());
     this.updatePoseWithLimelight();
     this.displayDrivetrainPose();
+    this.updateRobotVelocity();
   }
 
   /**
@@ -197,12 +203,16 @@ public class Drivetrain extends SubsystemBase {
    *         backRight}
    */
   private SwerveModulePosition[] getModulePositions() {
-    return new SwerveModulePosition[] {
-        this.frontLeft.getPosition(),
-        this.frontRight.getPosition(),
-        this.backLeft.getPosition(),
-        this.backRight.getPosition()
-    };
+    SwerveModule[] modules = {this.frontLeft, this.frontRight, this.backLeft, this.backRight};
+    SwerveModulePosition[] positions = {null, null, null, null};
+
+    for(int i = 0; i < modules.length; i++) {
+      positions[i] = new SwerveModulePosition(
+        modules[i].getPosition().distanceMeters * 48.00 / 46.45,
+        modules[i].getPosition().angle
+      );
+    }
+    return positions;
   }
 
   /**
@@ -212,6 +222,19 @@ public class Drivetrain extends SubsystemBase {
    */
   public void setDrivetrainPose(Pose2d pose) {
     this.poseEstimator.resetPosition(getGyroRotation(), getModulePositions(), pose);
+  }
+
+  private void updateRobotVelocity() {
+    Pose2d currentPose = this.getPose();
+    double currentTime = System.currentTimeMillis() / 1000.0;
+    double timeDifference = currentTime - this.oldPosition[2];
+    double[] newPosition = {currentPose.getX(), currentPose.getY(), currentTime};
+    this.robotVelocity = new double[]{(newPosition[0] - oldPosition[0]) / timeDifference, (newPosition[1] - oldPosition[1]) / timeDifference};
+    this.oldPosition = newPosition;
+  }
+
+  public double[] getDrivetrainVelocity() {
+    return this.robotVelocity;
   }
 
   /**

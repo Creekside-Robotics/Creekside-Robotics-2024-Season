@@ -5,22 +5,37 @@
 package frc.robot;
 
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.composite.PrepShot;
+import frc.robot.commands.composite.ShootNote;
+import frc.robot.commands.drivetrain.DriveToAmp;
+import frc.robot.commands.drivetrain.DriveToClimb;
+import frc.robot.commands.drivetrain.DriveToPickup;
+import frc.robot.commands.drivetrain.DriveToShoot;
 import frc.robot.commands.drivetrain.ManualDrive;
-import frc.robot.commands.drivetrain.SetPose;
-import frc.robot.commands.intake.RunUntilGamePiece;
+import frc.robot.commands.intake.IntakeAmp;
+import frc.robot.commands.intake.IntakeNote;
 import frc.robot.commands.intake.SetIntakeVoltage;
+import frc.robot.commands.shooter.RevShooter;
 import frc.robot.commands.shooter.SetShooterVoltage;
+import frc.robot.commands.tower.RetractTower;
+import frc.robot.commands.tower.SetAmpTower;
+import frc.robot.commands.tower.SetIntakeTower;
+import frc.robot.commands.tower.SetPickupTower;
+import frc.robot.commands.climber.ExtendArm;
+import frc.robot.commands.climber.RetractArm;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Tilt;
+import frc.robot.subsystems.Climber;
 import frc.robot.utils.DriverController;
+import frc.robot.utils.ShooterCalculator;
 
 /**
  * This class is where the bulk of the robot is declared. Since
@@ -36,8 +51,14 @@ public class RobotContainer {
     private final Drivetrain drivetrain = new Drivetrain();
     private final Shooter shooter = new Shooter();
     private final Intake intake = new Intake();
+    private final Elevator elevator = new Elevator();
+    private final Tilt tilt = new Tilt();
+    private final Climber climber = new Climber();
 
     private final DriverController mainController = new DriverController(Constants.DeviceIds.driverController);
+    private final DriverController alternateController = new DriverController(Constants.DeviceIds.alternateController);
+
+    private final ShooterCalculator shooterCalculator = new ShooterCalculator(drivetrain);
 
     private final SendableChooser<Command> commandChooser = new SendableChooser<>();
 
@@ -57,22 +78,109 @@ public class RobotContainer {
         this.shooter.setDefaultCommand(new SetShooterVoltage(shooter, ShooterConstants.idleVoltage));
         this.intake.setDefaultCommand(new SetIntakeVoltage(intake, 0));
 
-        this.mainController.buttons.get(1).whileTrue(
-            new SequentialCommandGroup(
-                new SetShooterVoltage(shooter, ShooterConstants.shootingVoltage).withTimeout(3.0),
-                new ParallelDeadlineGroup(
-                    new SetShooterVoltage(shooter, ShooterConstants.shootingVoltage).withTimeout(3.0),
-                    new SetIntakeVoltage(intake, IntakeConstants.intakeVoltage)
-                )
+        this.mainController.buttons.get("B").whileTrue(
+            new ParallelCommandGroup(
+                new DriveToShoot(drivetrain, mainController, shooterCalculator),
+                new PrepShot(shooter, elevator, tilt, shooterCalculator)
             )
         );
-        
-        this.mainController.buttons.get(2).whileTrue(
-            new RunUntilGamePiece(intake)
+        this.mainController.buttons.get("B").onFalse(
+            new SequentialCommandGroup(
+                new ShootNote(shooter, intake),
+                new RetractTower(elevator, tilt)
+            )
         );
 
-        this.mainController.buttons.get(3).onTrue(
-            new SetPose(drivetrain, new Pose2d())
+        this.mainController.buttons.get("Y").whileTrue(
+            new ParallelCommandGroup(
+                new DriveToAmp(drivetrain, mainController),
+                new SetAmpTower(elevator, tilt)
+            )
+        );
+        this.mainController.buttons.get("Y").onFalse(
+            new SequentialCommandGroup(
+                new IntakeAmp(intake),
+                new RetractTower(elevator, tilt)
+            )
+        );
+
+        this.mainController.buttons.get("A").whileTrue(
+            new ParallelCommandGroup(
+                new IntakeNote(intake),
+                new SetIntakeTower(elevator, tilt)
+            )
+        );
+
+        this.mainController.buttons.get("A").onFalse(
+            new RetractTower(elevator, tilt)
+        );
+
+        this.mainController.buttons.get("X").whileTrue(
+            new ParallelCommandGroup(
+                new DriveToPickup(drivetrain, mainController),
+                new SetPickupTower(elevator, tilt),
+                new IntakeNote(intake)
+            )
+        );
+        this.mainController.buttons.get("X").onFalse(
+            new RetractTower(elevator, tilt)
+        );
+
+        this.mainController.buttons.get("L").whileTrue(
+            new DriveToClimb(drivetrain, mainController)
+        );
+
+        this.mainController.buttons.get("R").whileTrue(
+            new ParallelCommandGroup(
+                new RetractArm(climber.leftHook),
+                new RetractArm(climber.rightHook),
+                new SetIntakeTower(elevator, tilt)
+            )
+        );
+
+        this.alternateController.buttons.get("B").whileTrue(
+            new SequentialCommandGroup(
+                new RevShooter(shooter),
+                new ShootNote(shooter, intake)
+            )
+        );
+
+        this.alternateController.buttons.get("Y").whileTrue(
+            new SetAmpTower(elevator, tilt)
+        );
+        this.alternateController.buttons.get("Y").onFalse(
+            new SequentialCommandGroup(
+                new IntakeAmp(intake),
+                new RetractTower(elevator, tilt)
+            )
+        );
+
+        this.alternateController.buttons.get("A").whileTrue(
+            new RetractTower(elevator, tilt)
+        );
+
+        this.alternateController.buttons.get("X").whileTrue(
+            new ParallelCommandGroup(
+                new SetPickupTower(elevator, tilt),
+                new IntakeNote(intake)
+            )
+        );
+        this.alternateController.buttons.get("X").onFalse(
+            new RetractTower(elevator, tilt)
+        );
+
+        this.alternateController.buttons.get("L").whileTrue(
+            new ParallelCommandGroup(
+                new ExtendArm(climber.leftHook),
+                new ExtendArm(climber.rightHook)
+            )
+        );
+
+        this.alternateController.buttons.get("R").whileTrue(
+            new ParallelCommandGroup(
+                new RetractArm(climber.leftHook),
+                new RetractArm(climber.rightHook)
+            )
         );
     }
 

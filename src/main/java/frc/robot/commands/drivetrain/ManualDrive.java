@@ -41,10 +41,11 @@ public class ManualDrive extends Command {
       this.drivetrain.setDrivetrainOutput(
         povOutput,
         false);
+    } else {
+      this.drivetrain.setDrivetrainOutput(
+          stickOutput,
+          true);
     }
-    this.drivetrain.setDrivetrainOutput(
-        stickOutput,
-        true);
   }
 
   // Called once the command ends or is interrupted.

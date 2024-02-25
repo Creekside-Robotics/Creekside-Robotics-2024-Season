@@ -31,14 +31,17 @@ public class Intake extends SubsystemBase {
     leftMotor.setSmartCurrentLimit(IntakeConstants.currentLimit);
     rightMotor.setSmartCurrentLimit(IntakeConstants.currentLimit);
 
+    this.colorSensor.configureColorSensor(ColorSensorV3.ColorSensorResolution.kColorSensorRes16bit, ColorSensorV3.ColorSensorMeasurementRate.kColorRate25ms, ColorSensorV3.GainFactor.kGain3x);
+
     colorMatcher.addColorMatch(Color.kOrange);
-    colorMatcher.setConfidenceThreshold(0.6);
+    colorMatcher.setConfidenceThreshold(0.5);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Color", colorSensor.getRawColor().blue);
+    // This method will be called once per scheduler run'
+    double getColor = colorSensor.getRed();
+    SmartDashboard.putNumber("Proximity", getColor);
   }
 
   public void setVoltage(double voltage) {
@@ -46,7 +49,13 @@ public class Intake extends SubsystemBase {
     rightMotor.setVoltage(voltage);
   }
 
+  public void setCurvedVoltage(double voltage) {
+    leftMotor.setVoltage(voltage);
+    rightMotor.setVoltage(voltage / 2.0);
+  }
+
   public boolean notePresent() {
-    return colorMatcher.matchColor(colorSensor.getColor()) != null;
+    boolean getProximity = colorSensor.getRed() > 70;
+    return getProximity;
   }
 }

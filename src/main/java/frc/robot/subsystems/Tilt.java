@@ -6,9 +6,12 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DeviceIds;
 import frc.robot.Constants.TiltConstants;
@@ -25,26 +28,34 @@ public class Tilt extends SubsystemBase {
   private CANSparkMax rightMotor = new CANSparkMax(DeviceIds.tiltRight, MotorType.kBrushless);
 
   private RelativeEncoder encoder;
-
-  private double goalPosition = TiltConstants.upperLimit;
-
+  
 
   public Tilt() {
     leftMotor.setInverted(true);
     rightMotor.setInverted(false);
     leftMotor.setSmartCurrentLimit(TiltConstants.currentLimit);
     rightMotor.setSmartCurrentLimit(TiltConstants.currentLimit);
+    leftMotor.setIdleMode(IdleMode.kCoast);
+    rightMotor.setIdleMode(IdleMode.kCoast);
 
     encoder = leftMotor.getEncoder();
     encoder.setPositionConversionFactor(TiltConstants.conversionFactor);
     encoder.setPosition(TiltConstants.upperLimit);
+
+    tiltController.setTolerance(TiltConstants.tolerance);
+    tiltController.setSetpoint(TiltConstants.upperLimit);
   }
 
   @Override
   public void periodic() {
     setVoltage(
-      tiltController.calculate(encoder.getPosition(), goalPosition)
+      MathUtil.clamp(
+        tiltController.calculate(encoder.getPosition()), 
+        -TiltConstants.maxVoltage, 
+        TiltConstants.maxVoltage
+      ) + TiltConstants.kS * Math.sin(encoder.getPosition() - TiltConstants.hangingAngle)
     );
+    SmartDashboard.putNumber("Tilt Position", this.encoder.getPosition());
   }
 
   private void setVoltage(double voltage) {
@@ -53,7 +64,11 @@ public class Tilt extends SubsystemBase {
   }
 
   public void setPosition(double position) {
-    goalPosition = position;
+    if (position > TiltConstants.hangingAngle) {
+      tiltController.setSetpoint(position + TiltConstants.backlashAngle);
+    } else {
+      tiltController.setSetpoint(position);
+    }
   }
 
   public boolean atPosition() {
