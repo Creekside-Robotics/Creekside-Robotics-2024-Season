@@ -184,12 +184,12 @@ public final class Constants {
   }
 
   public static class BlueTeamWaypoints {
-    public static Pose2d speaker = new Pose2d(1.40,5.60,new Rotation2d(-90.00));
+    public static Pose2d speaker = new Pose2d(1.40,5.60,new Rotation2d(-Math.PI/2));
     public static Pose2d amp = new Pose2d(1.85,7.25,new Rotation2d(Math.PI/2));
-    public static Pose2d pickup = new Pose2d(15.15,1.60,new Rotation2d(30.00));
-    public static Pose2d chainLeft = new Pose2d(4.00,5.50,new Rotation2d(30.00));
-    public static Pose2d chainRight = new Pose2d(4.00,2.65,new Rotation2d(-30.00));
-    public static Pose2d chainBack = new Pose2d(6.40,4.10,new Rotation2d(90.00));
+    public static Pose2d pickup = new Pose2d(15.15,1.60,new Rotation2d(0.52));
+    public static Pose2d chainLeft = new Pose2d(4.00,5.50,new Rotation2d(0.52));
+    public static Pose2d chainRight = new Pose2d(4.00,2.65,new Rotation2d(-0.52));
+    public static Pose2d chainBack = new Pose2d(6.40,4.10,new Rotation2d(Math.PI/2));
   }
 
   public static class FieldConstants {
@@ -244,12 +244,12 @@ public final class Constants {
   }
 
   public static class RedTeamWaypoints {
-    public static Pose2d speaker = new Pose2d(15.10,5.65,new Rotation2d(90.00));
-    public static Pose2d amp = new Pose2d(14.85,7.15,new Rotation2d(180));
-    public static Pose2d pickup = new Pose2d(1.20,1.75,new Rotation2d(150.00));
-    public static Pose2d chainLeft = new Pose2d(12.55,2.65,new Rotation2d(-150.00));
-    public static Pose2d chainRight = new Pose2d(12.60,5.50,new Rotation2d(150.00));
-    public static Pose2d chainBack = new Pose2d(10.15,4.00,new Rotation2d(90.00));
+    public static Pose2d speaker = new Pose2d(15.10,5.65,new Rotation2d(Math.PI/2));
+    public static Pose2d amp = new Pose2d(14.85,7.15,new Rotation2d(Math.PI));
+    public static Pose2d pickup = new Pose2d(1.20,1.75,new Rotation2d(2.68));
+    public static Pose2d chainLeft = new Pose2d(12.55,2.65,new Rotation2d(-2.68));
+    public static Pose2d chainRight = new Pose2d(12.60,5.50,new Rotation2d(2.68));
+    public static Pose2d chainBack = new Pose2d(10.15,4.00,new Rotation2d(Math.PI/2));
   }
 
   public static class TeamWaypoints {
