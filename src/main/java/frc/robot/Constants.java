@@ -7,6 +7,9 @@ package frc.robot;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.VecBuilder;
@@ -79,16 +82,17 @@ public final class Constants {
         SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI;
     public static double AbsoluteMaxAngularVelocity = AbsoluteMaxWheelVelocity /
         Math.hypot(wheelBaseLength / 2.0, wheelBaseLength / 2.0);
+    public static double positionMultiplier = 48.0 / 46.45;
 
     public static double driveCurrentLimit = 20.0;
 
     public static double translationMaxVelocity = 4.0;
     public static double rotationMaxVelocity = 2.0 * Math.PI;
 
-    public static double translationKP = 6;
-    public static double translationKD = 0.5;
-    public static double rotationKP = 6;
-    public static double rotationKD = 0.5;
+    public static double translationKP = 5.0;
+    public static double translationKD = 0.0;
+    public static double rotationKP = 5.0;
+    public static double rotationKD = 0.0;
 
     public static double frontLeftEncoderOffset = Math.toRadians(-89.82) - Math.PI / 2.0;
     public static double frontRightEncoderOffset = Math.toRadians(-180.703) + Math.PI / 2.0;
@@ -138,7 +142,7 @@ public final class Constants {
     public static double pI = 0;
     public static double pD = 0.00;
     
-    public static double kS = 0.5;
+    public static double kS = 0.25;
     
     public static double maxVoltage = 8.0;
 
@@ -159,7 +163,7 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    public static double idleVoltage = 2.0;
+    public static double idleVoltage = 4.0;
     public static double shootingVoltage = 10.0;
 
     public static double revtime = 1.5;
@@ -172,15 +176,20 @@ public final class Constants {
     public static double intakeVoltage = 6.0;
     public static double exitVoltage = -10.0;
 
-    public static double shootTime = 0.75;
-    public static double ampTime = 1.5;
+    public static double shootTime = 0.5;
+    public static double ampTime = 1.0;
 
     public static int currentLimit = 20;
   }
 
   public static class AutoConstants {
-    public static double maxVelocity = 2;
-    public static double maxAcceleration = 1.5;
+    public static HolonomicPathFollowerConfig autoConfig = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+      new PIDConstants(DrivetrainConstants.translationKP, 0.0, DrivetrainConstants.translationKD), // Translation PID constants
+      new PIDConstants(DrivetrainConstants.rotationKP, 0.0, DrivetrainConstants.rotationKD), // Rotation PID constants
+      DrivetrainConstants.AbsoluteMaxWheelVelocity, // Max module speed, in m/s
+      DrivetrainConstants.wheelBaseLength * Math.sqrt(2.0) / 2.0, // Drive base radius in meters. Distance from robot center to furthest module.
+      new ReplanningConfig() // Default path replanning config. See the API for the options here
+    );
   }
 
   public static class BlueTeamWaypoints {
