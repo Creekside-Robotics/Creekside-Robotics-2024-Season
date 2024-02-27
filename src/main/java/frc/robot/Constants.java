@@ -89,9 +89,9 @@ public final class Constants {
     public static double translationMaxVelocity = 4.0;
     public static double rotationMaxVelocity = 2.0 * Math.PI;
 
-    public static double translationKP = 5.0;
+    public static double translationKP = 8.0;
     public static double translationKD = 0.0;
-    public static double rotationKP = 5.0;
+    public static double rotationKP = 8.0;
     public static double rotationKD = 0.0;
 
     public static double frontLeftEncoderOffset = Math.toRadians(-89.82) - Math.PI / 2.0;
