@@ -82,7 +82,7 @@ public final class Constants {
         SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI;
     public static double AbsoluteMaxAngularVelocity = AbsoluteMaxWheelVelocity /
         Math.hypot(wheelBaseLength / 2.0, wheelBaseLength / 2.0);
-    public static double positionMultiplier = 48.0 / 46.45;
+    public static double positionMultiplier = 48.0 / 48.0;
 
     public static double driveCurrentLimit = 20.0;
 
@@ -138,11 +138,11 @@ public final class Constants {
     public static double hangingAngle = Math.PI / 4.0;
     public static double backlashAngle = 1.0 / 10.0;
 
-    public static double pP = 10;
+    public static double pP = 15;
     public static double pI = 0;
     public static double pD = 0.00;
     
-    public static double kS = 0.25;
+    public static double kS = 0.1;
     
     public static double maxVoltage = 8.0;
 
@@ -166,7 +166,7 @@ public final class Constants {
     public static double idleVoltage = 4.0;
     public static double shootingVoltage = 10.0;
 
-    public static double revtime = 1.5;
+    public static double revtime = 2.0;
 
     public static int currentLimit = 20;
   }
