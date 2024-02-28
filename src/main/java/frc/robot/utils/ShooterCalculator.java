@@ -4,7 +4,6 @@
 
 package frc.robot.utils;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.Constants.FieldConstants;
@@ -15,26 +14,27 @@ public class ShooterCalculator {
     private Drivetrain drivetrain;
     private double shootSpeed = 15.0;
     private double gravity = 9.8;
-    private double timeDelay = 0.25;
 
     public ShooterCalculator(Drivetrain drivetrain){
         this.drivetrain = drivetrain;
     }
 
-    public double[] getMovedPosition() {
-        Pose2d currentPosition = this.drivetrain.getPose();
-        double[] currentVelocity = this.drivetrain.getDrivetrainVelocity();
-        double[] futurePosition = new double[]{
-            currentPosition.getX() + currentVelocity[0] * timeDelay, 
-            currentPosition.getY() + currentVelocity[1] * timeDelay
+    public double[] targetPositionDifference(){
+        double[] targetPosition = new double[]{
+            FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition).getX(),
+            FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition).getY()
         };
-        return futurePosition;
+
+        return new double[]{
+            targetPosition[0] - this.drivetrain.getPose().getX(),
+            targetPosition[1] - this.drivetrain.getPose().getY()
+        };
     }
 
     public double shotDistance() {
         return Math.hypot(
-            getMovedPosition()[0] - FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition).getX(),
-            getMovedPosition()[1] - FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition).getY()
+            targetPositionDifference()[0],
+            targetPositionDifference()[1]
         );
     }
 
@@ -52,18 +52,6 @@ public class ShooterCalculator {
         return heightDifference() + 0.5 * gravity * Math.pow(shotTime(), 2);
     }
 
-    public double[] targetPositionDifference(){
-        double[] currentVelocity = this.drivetrain.getDrivetrainVelocity();
-        double[] targetPosition = new double[]{
-            FieldConstants.tranformPoseBluePose(FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition)).getX() - currentVelocity[0] * shotTime(),
-            FieldConstants.tranformPoseBluePose(FieldConstants.speakerPosition).getY() - currentVelocity[1] * shotTime()
-        };
-
-        return new double[]{
-            targetPosition[0] - getMovedPosition()[0],
-            targetPosition[1] - getMovedPosition()[1]
-        };
-    }
 
     public Rotation2d getRotation(){
         return new Rotation2d(-targetPositionDifference()[0], -targetPositionDifference()[1]);

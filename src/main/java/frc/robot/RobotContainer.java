@@ -5,10 +5,16 @@
 package frc.robot;
 
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.composite.PrepShot;
 import frc.robot.commands.composite.ShootNote;
@@ -26,6 +32,8 @@ import frc.robot.commands.tower.RetractTower;
 import frc.robot.commands.tower.SetAmpTower;
 import frc.robot.commands.tower.SetIntakeTower;
 import frc.robot.commands.tower.SetPickupTower;
+import frc.robot.commands.auto.AutoCycle;
+import frc.robot.commands.auto.RevPrepShot;
 import frc.robot.commands.climber.ExtendArm;
 import frc.robot.commands.climber.RetractArm;
 import frc.robot.subsystems.Drivetrain;
@@ -60,7 +68,7 @@ public class RobotContainer {
 
     private final ShooterCalculator shooterCalculator = new ShooterCalculator(drivetrain);
 
-    private final SendableChooser<Command> commandChooser = new SendableChooser<>();
+    private SendableChooser<Command> commandChooser;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -68,6 +76,36 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
+        configureAutoCommands();
+    }
+
+    public void configureAutoCommands() {
+        AutoBuilder.configureHolonomic(
+            drivetrain::getPose, // Robot pose supplier
+            drivetrain::setDrivetrainPose, // Method to reset odometry (will be called if your auto has a starting pose)
+            drivetrain::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            drivetrain::setDrivetrainSpeedsAuto, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            AutoConstants.autoConfig,
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            drivetrain // Reference to this subsystem to set requirements
+    );
+
+    NamedCommands.registerCommand("Prep", new RevPrepShot(elevator, tilt, shooter, shooterCalculator));
+    NamedCommands.registerCommand("Intermediate", new AutoCycle(elevator, tilt, shooter, intake, shooterCalculator));
+    NamedCommands.registerCommand("Shoot", new ShootNote(shooter, intake));
+    
+    this.commandChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", this.commandChooser);
     }
 
     /**
