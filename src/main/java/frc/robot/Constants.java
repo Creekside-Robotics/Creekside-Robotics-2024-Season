@@ -111,7 +111,7 @@ public final class Constants {
 
     public static double ampPosition = 0.95;
     public static double shootPosition = 0.609;
-    public static double pickupPosition = 0.550;
+    public static double pickupPosition = 0.687;
 
     public static double pP = 75;
     public static double pI = 0;
@@ -133,7 +133,7 @@ public final class Constants {
     public static double upperLimit = Math.PI / 3.0;
 
     public static double ampAngle = Math.PI / 12.0;
-    public static double pickupAngle = - Math.PI / 4;
+    public static double pickupAngle = -0.766;
 
     public static double hangingAngle = Math.PI / 4.0;
     public static double backlashAngle = 1.0 / 8.0;
@@ -180,6 +180,8 @@ public final class Constants {
     public static double ampTime = 1.0;
 
     public static int currentLimit = 20;
+
+    public static int redLimit = 100;
   }
 
   public static class AutoConstants {
