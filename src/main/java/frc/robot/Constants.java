@@ -89,9 +89,9 @@ public final class Constants {
     public static double translationMaxVelocity = 4.0;
     public static double rotationMaxVelocity = 2.0 * Math.PI;
 
-    public static double translationKP = 8.0;
+    public static double translationKP = 6.0;
     public static double translationKD = 0.0;
-    public static double rotationKP = 8.0;
+    public static double rotationKP = 6.0;
     public static double rotationKD = 0.0;
 
     public static double frontLeftEncoderOffset = Math.toRadians(-89.82) - Math.PI / 2.0;
@@ -99,10 +99,10 @@ public final class Constants {
     public static double backLeftEncoderOffset = Math.toRadians(-80.069 + 17.5) - Math.PI / 2.0;
     public static double backRightEncoderOffset = Math.toRadians(-88.330) + Math.PI / 2.0;
 
-    public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.01, 0.01, 0.02);
+    public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.005, 0.005, 0.01);
     public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.5, 0.5, 1.0);
 
-    public static double adjustmentSpeed = 0.5;
+    public static double adjustmentSpeed = 0.75;
   }
 
   public static class ElevatorConstants {
