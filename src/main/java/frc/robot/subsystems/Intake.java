@@ -41,7 +41,7 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run'
     double getColor = colorSensor.getRed();
-    SmartDashboard.putNumber("Proximity", getColor);
+    SmartDashboard.putBoolean("Note", getColor > IntakeConstants.redLimit);
   }
 
   public void setVoltage(double voltage) {
@@ -55,7 +55,7 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean notePresent() {
-    boolean getProximity = colorSensor.getRed() > 70;
+    boolean getProximity = colorSensor.getRed() > IntakeConstants.redLimit;
     return getProximity;
   }
 }

@@ -89,9 +89,9 @@ public final class Constants {
     public static double translationMaxVelocity = 4.0;
     public static double rotationMaxVelocity = 2.0 * Math.PI;
 
-    public static double translationKP = 8.0;
+    public static double translationKP = 6.0;
     public static double translationKD = 0.0;
-    public static double rotationKP = 8.0;
+    public static double rotationKP = 6.0;
     public static double rotationKD = 0.0;
 
     public static double frontLeftEncoderOffset = Math.toRadians(-89.82) - Math.PI / 2.0;
@@ -99,10 +99,10 @@ public final class Constants {
     public static double backLeftEncoderOffset = Math.toRadians(-80.069 + 17.5) - Math.PI / 2.0;
     public static double backRightEncoderOffset = Math.toRadians(-88.330) + Math.PI / 2.0;
 
-    public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.01, 0.01, 0.02);
+    public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.005, 0.005, 0.01);
     public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.5, 0.5, 1.0);
 
-    public static double adjustmentSpeed = 0.5;
+    public static double adjustmentSpeed = 0.75;
   }
 
   public static class ElevatorConstants {
@@ -111,7 +111,7 @@ public final class Constants {
 
     public static double ampPosition = 0.95;
     public static double shootPosition = 0.609;
-    public static double pickupPosition = 0.550;
+    public static double pickupPosition = 0.687;
 
     public static double pP = 75;
     public static double pI = 0;
@@ -133,7 +133,7 @@ public final class Constants {
     public static double upperLimit = Math.PI / 3.0;
 
     public static double ampAngle = Math.PI / 12.0;
-    public static double pickupAngle = - Math.PI / 4;
+    public static double pickupAngle = -0.766;
 
     public static double hangingAngle = Math.PI / 4.0;
     public static double backlashAngle = 1.0 / 8.0;
@@ -180,6 +180,8 @@ public final class Constants {
     public static double ampTime = 1.0;
 
     public static int currentLimit = 20;
+
+    public static int redLimit = 100;
   }
 
   public static class AutoConstants {
