@@ -17,9 +17,9 @@ public class DriveToPickup extends DriveToPosePID{
             drivetrain, 
             driverController, 
             () -> FieldConstants.tranformPoseBluePose(FieldConstants.pickup), 
-            new boolean[]{true, true, true}, 
+            new boolean[]{false, false, true}, 
             new Pose2d(0.03, 0.03, new Rotation2d(0.03)),
-            false
+            true
         );
     }
 }

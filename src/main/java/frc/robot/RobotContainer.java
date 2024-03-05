@@ -19,7 +19,6 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.composite.PrepShot;
 import frc.robot.commands.composite.ShootNote;
 import frc.robot.commands.drivetrain.DriveToAmp;
-import frc.robot.commands.drivetrain.DriveToClimb;
 import frc.robot.commands.drivetrain.DriveToPickup;
 import frc.robot.commands.drivetrain.DriveToShoot;
 import frc.robot.commands.drivetrain.ManualDrive;
@@ -166,7 +165,14 @@ public class RobotContainer {
         );
 
         this.mainController.buttons.get("L").whileTrue(
-            new DriveToClimb(drivetrain, mainController)
+            new ParallelCommandGroup(
+                new IntakeNote(intake),
+                new SetIntakeTower(elevator, tilt)
+            )
+        );
+
+        this.mainController.buttons.get("L").onFalse(
+            new RetractTower(elevator, tilt)
         );
 
         this.mainController.buttons.get("R").whileTrue(
