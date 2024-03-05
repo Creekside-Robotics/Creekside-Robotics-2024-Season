@@ -84,7 +84,7 @@ public final class Constants {
         Math.hypot(wheelBaseLength / 2.0, wheelBaseLength / 2.0);
     public static double positionMultiplier = 48.0 / 48.0;
 
-    public static double driveCurrentLimit = 20.0;
+    public static double driveCurrentLimit = 40.0;
 
     public static double translationMaxVelocity = 4.0;
     public static double rotationMaxVelocity = 2.0 * Math.PI;
@@ -102,7 +102,7 @@ public final class Constants {
     public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.01, 0.01, 0.02);
     public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.5, 0.5, 1.0);
 
-    public static double adjustmentSpeed = 0.75;
+    public static double adjustmentSpeed = 1.0;
   }
 
   public static class ElevatorConstants {
@@ -173,13 +173,13 @@ public final class Constants {
 
   public static class IntakeConstants {
     public static double idleVoltage = 0.0;
-    public static double intakeVoltage = 6.0;
+    public static double intakeVoltage = 10.0;
     public static double exitVoltage = -10.0;
 
     public static double shootTime = 0.5;
     public static double ampTime = 1.0;
 
-    public static int currentLimit = 20;
+    public static int currentLimit = 10;
 
     public static int redLimit = 100;
   }
