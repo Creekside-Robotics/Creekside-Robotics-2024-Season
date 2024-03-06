@@ -32,7 +32,7 @@ import frc.robot.commands.tower.SetAmpTower;
 import frc.robot.commands.tower.SetIntakeTower;
 import frc.robot.commands.tower.SetPickupTower;
 import frc.robot.commands.auto.AutoCycle;
-import frc.robot.commands.auto.RevPrepShot;
+import frc.robot.commands.auto.AutoShot;
 import frc.robot.commands.climber.ExtendArm;
 import frc.robot.commands.climber.RetractArm;
 import frc.robot.subsystems.Drivetrain;
@@ -99,10 +99,8 @@ public class RobotContainer {
             drivetrain // Reference to this subsystem to set requirements
     );
 
-    NamedCommands.registerCommand("Prep", new RevPrepShot(elevator, tilt, shooter, shooterCalculator));
-    NamedCommands.registerCommand("Intermediate", new AutoCycle(elevator, tilt, shooter, intake, shooterCalculator));
-    NamedCommands.registerCommand("Shoot", new ShootNote(shooter, intake));
-    NamedCommands .registerCommand("PrepNoTime", new PrepShot(shooter, elevator, tilt, shooterCalculator));
+    NamedCommands.registerCommand("Shoot", new AutoShot(drivetrain, elevator, tilt, shooter, intake, alternateController, shooterCalculator));
+    NamedCommands.registerCommand("Cycle", new AutoCycle(elevator, tilt, shooter, intake, shooterCalculator));
     
     this.commandChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", this.commandChooser);

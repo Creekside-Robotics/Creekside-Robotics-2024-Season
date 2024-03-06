@@ -6,9 +6,8 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.composite.PrepShot;
-import frc.robot.commands.composite.ShootNote;
 import frc.robot.commands.intake.IntakeNote;
+import frc.robot.commands.tower.RetractTower;
 import frc.robot.commands.tower.SetIntakeTower;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -25,12 +24,11 @@ public class AutoCycle extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ShootNote(shooter, intake),
       new ParallelDeadlineGroup(
         new IntakeNote(intake),
         new SetIntakeTower(elevator, tilt)
       ),
-      new PrepShot(shooter, elevator, tilt, shooterCalculator)
+      new RetractTower(elevator, tilt)
     );
   }
 }
