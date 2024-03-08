@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "R1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "R2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "R3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "R4"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

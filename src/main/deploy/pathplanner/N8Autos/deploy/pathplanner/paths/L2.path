@@ -1,0 +1,90 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.581358145172431,
+        "y": 4.0943608704260015
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.015554507299491,
+        "y": 2.396949956807182
+      },
+      "isLocked": false,
+      "linkedName": "Note1"
+    },
+    {
+      "anchor": {
+        "x": 8.290831218253917,
+        "y": 0.7818377541516989
+      },
+      "prevControl": {
+        "x": 7.282672008953041,
+        "y": 0.6686770265771117
+      },
+      "nextControl": {
+        "x": 8.669639604684395,
+        "y": 0.8243570628326706
+      },
+      "isLocked": false,
+      "linkedName": "Note4"
+    },
+    {
+      "anchor": {
+        "x": 4.433079141847506,
+        "y": 1.6871235747484037
+      },
+      "prevControl": {
+        "x": 6.370335724694005,
+        "y": 0.8583498370004277
+      },
+      "nextControl": {
+        "x": 2.4958225590010077,
+        "y": 2.515897312496379
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.3550366900232556,
+        "y": 3.8474647375359914
+      },
+      "prevControl": {
+        "x": 2.3138873345415867,
+        "y": 3.07591432225471
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Shooting Point 2"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -47.419509216656316,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Left Paths",
+  "previewStartingState": {
+    "rotation": -0.7252242990592453,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
