@@ -34,8 +34,8 @@ import frc.robot.commands.tower.SetIntakeTower;
 import frc.robot.commands.tower.SetPickupTower;
 import frc.robot.commands.auto.AutoCycle;
 import frc.robot.commands.auto.RevPrepShot;
-import frc.robot.commands.climber.ExtendArm;
-import frc.robot.commands.climber.RetractArm;
+import frc.robot.commands.climber.ExtendArms;
+import frc.robot.commands.climber.RetractArms;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -179,8 +179,7 @@ public class RobotContainer {
 
         this.mainController.buttons.get("R").whileTrue(
             new ParallelCommandGroup(
-                new RetractArm(climber.leftHook),
-                new RetractArm(climber.rightHook),
+                new RetractArms(climber),
                 new SetIntakeTower(elevator, tilt)
             )
         );
@@ -217,17 +216,11 @@ public class RobotContainer {
         );
 
         this.alternateController.buttons.get("L").whileTrue(
-            new ParallelCommandGroup(
-                new ExtendArm(climber.leftHook),
-                new ExtendArm(climber.rightHook)
-            )
+            new ExtendArms(climber)
         );
 
         this.alternateController.buttons.get("R").whileTrue(
-            new ParallelCommandGroup(
-                new RetractArm(climber.leftHook),
-                new RetractArm(climber.rightHook)
-            )
+            new RetractArms(climber)
         );
     }
 
