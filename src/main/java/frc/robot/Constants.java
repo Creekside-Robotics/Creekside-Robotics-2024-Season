@@ -54,14 +54,12 @@ public final class Constants {
     public static int backRightTurn = 8;
     public static int elevatorLeft = 9;
     public static int elevatorRight = 10;
-    public static int tiltLeft = 11;
-    public static int tiltRight = 12;
-    public static int intakeLeft = 13;
-    public static int intakeRight = 14;
-    public static int shooterLeft = 15;
-    public static int shooterRight = 16;
-    public static int climberLeft = 17;
-    public static int climberRight = 18;
+    public static int tilt = 11;
+    public static int intakeLeft = 12;
+    public static int intakeRight = 13;
+    public static int shooterLeft = 14;
+    public static int shooterRight = 15;
+    public static int climber = 16;
 
     public static int frontLeftEncoder = 1;
     public static int frontRightEncoder = 2;
