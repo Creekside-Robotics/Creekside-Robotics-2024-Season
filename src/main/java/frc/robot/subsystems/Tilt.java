@@ -24,21 +24,20 @@ public class Tilt extends SubsystemBase {
     TiltConstants.pD
   );
 
-  private CANSparkMax leftMotor = new CANSparkMax(DeviceIds.tiltLeft, MotorType.kBrushless);
-  private CANSparkMax rightMotor = new CANSparkMax(DeviceIds.tiltRight, MotorType.kBrushless);
+  private CANSparkMax motor = new CANSparkMax(DeviceIds.tilt, MotorType.kBrushless);
 
   private RelativeEncoder encoder;
   
 
   public Tilt() {
-    leftMotor.setInverted(true);
-    rightMotor.setInverted(false);
-    leftMotor.setSmartCurrentLimit(TiltConstants.currentLimit);
-    rightMotor.setSmartCurrentLimit(TiltConstants.currentLimit);
-    leftMotor.setIdleMode(IdleMode.kCoast);
-    rightMotor.setIdleMode(IdleMode.kCoast);
+    motor.setInverted(true);
+    
+    motor.setSmartCurrentLimit(TiltConstants.currentLimit);
+    
+    motor.setIdleMode(IdleMode.kCoast);
+    
 
-    encoder = leftMotor.getEncoder();
+    encoder = motor.getEncoder();
     encoder.setPositionConversionFactor(TiltConstants.conversionFactor);
     encoder.setPosition(TiltConstants.upperLimit);
 
@@ -59,8 +58,7 @@ public class Tilt extends SubsystemBase {
   }
 
   private void setVoltage(double voltage) {
-    leftMotor.setVoltage(voltage);
-    rightMotor.setVoltage(voltage);
+    motor.setVoltage(voltage);
   }
 
   public void setPosition(double position) {
