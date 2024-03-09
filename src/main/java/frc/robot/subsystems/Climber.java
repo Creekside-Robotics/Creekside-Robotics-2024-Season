@@ -4,30 +4,37 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.DeviceIds;
 
 public class Climber extends SubsystemBase{
     /** Creates a new Climber **/
 
-    public Hook leftHook = new Hook(DeviceIds.climberLeft);
-    public Hook rightHook = new Hook(DeviceIds.climberRight);
-    
-    public Climber(){}
+    public CANSparkMax motor = new CANSparkMax(DeviceIds.climber, MotorType.kBrushless);
+    public RelativeEncoder encoder;
+    public Climber(){
+            motor.setInverted(false);
+            motor.setSmartCurrentLimit(ClimberConstants.currentLimit);
 
+            encoder = motor.getEncoder();
+            encoder.setPositionConversionFactor(ClimberConstants.positionConversionRate);
+            encoder.setVelocityConversionFactor(ClimberConstants.positionConversionRate/(60.0));
+            encoder.setPosition(1.0);
+        }
+    
     public void setVoltage (double voltage) {
-        leftHook.setVoltage(voltage);
-        rightHook.setVoltage(voltage);
+        motor.setVoltage(voltage);
     }
 
     @Override
     public void periodic() {
-        // Left logs
-        SmartDashboard.putNumber("Left Hook Position", leftHook.getPosition());
-        SmartDashboard.putNumber("Left Hook Velocity", leftHook.getVelocity());
-        // Right logs
-        SmartDashboard.putNumber("Right Hook Position", rightHook.getPosition());
-        SmartDashboard.putNumber("Right Hook Velocity", rightHook.getVelocity());
+        SmartDashboard.putNumber("Hooks Position", encoder.getPosition());
+        SmartDashboard.putNumber("Hooks Velocity", encoder.getVelocity());
     }
 }
