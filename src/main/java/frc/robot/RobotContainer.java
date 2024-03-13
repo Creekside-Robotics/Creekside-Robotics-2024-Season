@@ -105,7 +105,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Prep", new RevPrepShot(elevator, tilt, shooter, shooterCalculator));
     NamedCommands.registerCommand("Intermediate", new AutoCycle(elevator, tilt, shooter, intake, shooterCalculator));
     NamedCommands.registerCommand("Shoot", new ShootNote(shooter, intake));
-    NamedCommands .registerCommand("PrepNoTime", new PrepShot(shooter, elevator, tilt, shooterCalculator));
+    NamedCommands.registerCommand("PrepNoTime", new PrepShot(shooter, elevator, tilt, shooterCalculator));
     
     this.commandChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", this.commandChooser);
