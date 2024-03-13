@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.composite.IntakeGroundAuto;
 import frc.robot.commands.composite.PrepShot;
 import frc.robot.commands.composite.ShootNote;
 import frc.robot.commands.drivetrain.DriveToAmp;
@@ -42,6 +43,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilt;
 import frc.robot.subsystems.Climber;
 import frc.robot.utils.DriverController;
+import frc.robot.utils.RotationSupplier;
 import frc.robot.utils.ShooterCalculator;
 
 /**
@@ -66,6 +68,7 @@ public class RobotContainer {
     private final DriverController alternateController = new DriverController(Constants.DeviceIds.alternateController);
 
     private final ShooterCalculator shooterCalculator = new ShooterCalculator(drivetrain);
+    private final RotationSupplier rotationSupplier = new RotationSupplier();
 
     private SendableChooser<Command> commandChooser;
 
@@ -143,10 +146,7 @@ public class RobotContainer {
         );
 
         this.mainController.buttons.get("A").whileTrue(
-            new ParallelCommandGroup(
-                new IntakeNote(intake),
-                new SetIntakeTower(elevator, tilt)
-            )
+            new IntakeGroundAuto(intake, drivetrain, alternateController, rotationSupplier)
         );
 
         this.mainController.buttons.get("A").onFalse(
@@ -201,7 +201,10 @@ public class RobotContainer {
         );
 
         this.alternateController.buttons.get("A").whileTrue(
-            new RetractTower(elevator, tilt)
+            new ParallelCommandGroup(
+                new IntakeNote(intake),
+                new SetIntakeTower(elevator, tilt)
+            )
         );
 
         this.alternateController.buttons.get("X").whileTrue(
