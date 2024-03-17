@@ -11,8 +11,11 @@ public class DriveToNote extends DriveToPosePID{
         super(
             drivetrain,
             driverController,
-            () -> new Pose2d(0, 0, new Rotation2d(rotationSupplier.getValue())), 
-            new boolean[]{false, false, true}, 
+            () -> new Pose2d(
+                drivetrain.getPose().getTranslation().getX()+5*drivetrain.getPose().getRotation().plus(new Rotation2d(rotationSupplier.getValue())).getCos(), // Moves the robot on the straight linetowards the note
+                drivetrain.getPose().getTranslation().getY()+5*drivetrain.getPose().getRotation().plus(new Rotation2d(rotationSupplier.getValue())).getSin(), //
+                drivetrain.getPose().getRotation().plus(new Rotation2d(rotationSupplier.getValue()))),
+            new boolean[]{false, false, true},
             new Pose2d(0.03, 0.03, new Rotation2d(0.03)),
             true
         );
