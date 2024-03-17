@@ -201,10 +201,7 @@ public class RobotContainer {
         );
 
         this.alternateController.buttons.get("A").whileTrue(
-            new ParallelCommandGroup(
-                new IntakeNote(intake),
-                new SetIntakeTower(elevator, tilt)
-            )
+            new RetractTower(elevator, tilt)
         );
 
         this.alternateController.buttons.get("X").whileTrue(
