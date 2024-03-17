@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.composite.IntakeGroundAuto;
 import frc.robot.commands.composite.PrepShot;
 import frc.robot.commands.composite.ShootNote;
 import frc.robot.commands.drivetrain.DriveToAmp;
@@ -42,6 +43,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilt;
 import frc.robot.subsystems.Climber;
 import frc.robot.utils.DriverController;
+import frc.robot.utils.RotationSupplier;
 import frc.robot.utils.ShooterCalculator;
 
 /**
@@ -66,6 +68,7 @@ public class RobotContainer {
     private final DriverController alternateController = new DriverController(Constants.DeviceIds.alternateController);
 
     private final ShooterCalculator shooterCalculator = new ShooterCalculator(drivetrain);
+    private final RotationSupplier rotationSupplier = new RotationSupplier();
 
     private SendableChooser<Command> commandChooser;
 
@@ -102,7 +105,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Prep", new RevPrepShot(elevator, tilt, shooter, shooterCalculator));
     NamedCommands.registerCommand("Intermediate", new AutoCycle(elevator, tilt, shooter, intake, shooterCalculator));
     NamedCommands.registerCommand("Shoot", new ShootNote(shooter, intake));
-    NamedCommands .registerCommand("PrepNoTime", new PrepShot(shooter, elevator, tilt, shooterCalculator));
+    NamedCommands.registerCommand("PrepNoTime", new PrepShot(shooter, elevator, tilt, shooterCalculator));
     
     this.commandChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", this.commandChooser);
@@ -143,10 +146,7 @@ public class RobotContainer {
         );
 
         this.mainController.buttons.get("A").whileTrue(
-            new ParallelCommandGroup(
-                new IntakeNote(intake),
-                new SetIntakeTower(elevator, tilt)
-            )
+            new IntakeGroundAuto(intake, drivetrain, alternateController, rotationSupplier)
         );
 
         this.mainController.buttons.get("A").onFalse(
