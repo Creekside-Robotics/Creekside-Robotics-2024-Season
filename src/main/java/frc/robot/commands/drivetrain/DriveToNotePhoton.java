@@ -15,8 +15,8 @@ public class DriveToNotePhoton extends SetDrivetrainOutput{
             drivetrain,
             () -> new ChassisSpeeds(
                 DrivetrainConstants.autoIntakeSpeed,
-                0.0,
-                drivetrain.getNoteAlignmentDrivetrainOutput()
+                drivetrain.getNoteAlignmentDrivetrainOutput(),
+                0.0
             ),
             false
         );

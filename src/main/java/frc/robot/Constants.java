@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+
+
+
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -94,14 +97,14 @@ public final class Constants {
 
     public static double frontLeftEncoderOffset = Math.toRadians(-89.82) - Math.PI / 2.0;
     public static double frontRightEncoderOffset = Math.toRadians(-180.703) + Math.PI / 2.0;
-    public static double backLeftEncoderOffset = Math.toRadians(-80.069 + 17.5) - Math.PI / 2.0;
+    public static double backLeftEncoderOffset = Math.toRadians(-80.069 + 17.5 - 45.0 - 7.5 - 5.0) - Math.PI / 2.0;
     public static double backRightEncoderOffset = Math.toRadians(-88.330) + Math.PI / 2.0;
 
     public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.01, 0.01, 0.02);
     public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.5, 0.5, 1.0);
 
     public static double adjustmentSpeed = 1.0;
-    public static double autoIntakeSpeed = 2.0;
+    public static double autoIntakeSpeed = 1.0;
   }
 
   public static class ElevatorConstants {
@@ -135,17 +138,17 @@ public final class Constants {
     public static double pickupAngle = -0.766;
 
     public static double hangingAngle = Math.PI / 4.0;
-    public static double backlashAngle = 1.0 / 16.0;
+    public static double backlashAngle = 1.0 / 40.0;
 
     public static double pP = 10;
     public static double pI = 0;
     public static double pD = 0.5;
     
-    public static double kS = 0.5;
+    public static double kS = 4.0;
     
     public static double maxVoltage = 8.0;
 
-    public static double tolerance = 0.03;
+    public static double tolerance = 0.05;
 
     public static double conversionFactor = 0.1047 * 60.0 / 27.0;
 
@@ -167,18 +170,18 @@ public final class Constants {
 
     public static double revtime = 1.5;
 
-    public static int currentLimit = 20;
+    public static int currentLimit = 15;
   }
 
   public static class IntakeConstants {
     public static double idleVoltage = 0.0;
-    public static double intakeVoltage = 10.0;
+    public static double intakeVoltage = 6.0;
     public static double exitVoltage = -10.0;
 
     public static double shootTime = 0.5;
     public static double ampTime = 1.0;
 
-    public static int currentLimit = 10;
+    public static int currentLimit = 30;
 
     public static int redLimit = 100;
   }
@@ -210,7 +213,7 @@ public final class Constants {
 
     public static Pose2d speaker = new Pose2d(1.40,5.60,new Rotation2d(-90.00));
     public static Pose2d amp = new Pose2d(1.83, 7.69, new Rotation2d(Math.PI / 2.0));
-    public static Pose2d pickup = new Pose2d(15.15,1.60,new Rotation2d(30.00));
+    public static Pose2d pickup = new Pose2d(15.15,1.60,new Rotation2d(-Math.PI / 3.0));
 
     public static Pose2d chainLeft = new Pose2d(4.00,5.50,new Rotation2d(Math.PI * 2.0 / 3.0));
     public static Pose2d chainRight = new Pose2d(4.00,2.65,new Rotation2d(-Math.PI * 2.0 / 3.0));
