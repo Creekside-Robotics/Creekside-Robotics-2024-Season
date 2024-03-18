@@ -134,21 +134,21 @@ public final class Constants {
     public static double pickupAngle = -0.766;
 
     public static double hangingAngle = Math.PI / 4.0;
-    public static double backlashAngle = 1.0 / 8.0;
+    public static double backlashAngle = 1.0 / 16.0;
 
-    public static double pP = 20;
+    public static double pP = 10;
     public static double pI = 0;
-    public static double pD = 0.00;
+    public static double pD = 0.5;
     
-    public static double kS = 0.1;
+    public static double kS = 0.5;
     
     public static double maxVoltage = 8.0;
 
     public static double tolerance = 0.03;
 
-    public static double conversionFactor = 0.1047 * 60.0 / 125.0;
+    public static double conversionFactor = 0.1047 * 60.0 / 27.0;
 
-    public static int currentLimit = 10;
+    public static int currentLimit = 20;
   }
 
   public static class ClimberConstants {
