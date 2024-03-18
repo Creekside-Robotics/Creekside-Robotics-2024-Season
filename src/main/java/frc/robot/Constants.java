@@ -103,6 +103,7 @@ public final class Constants {
     public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.5, 0.5, 1.0);
 
     public static double adjustmentSpeed = 1.0;
+    public static double autoIntakeSpeed = 2.0;
   }
 
   public static class ElevatorConstants {

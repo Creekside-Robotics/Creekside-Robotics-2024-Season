@@ -10,12 +10,18 @@ import frc.robot.utils.LimelightHelpers.LimelightResults;
 import frc.robot.Constants.DeviceIds;
 
 import com.swervedrivespecialties.swervelib.SwerveModule;
+
+import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
+
 import com.swervedrivespecialties.swervelib.MkModuleConfiguration;
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -46,6 +52,14 @@ public class Drivetrain extends SubsystemBase {
   private SwerveModule backRight;
 
   private final ADIS16448_IMU gyro = new ADIS16448_IMU();
+
+  private PhotonCamera driverCamera = new PhotonCamera("photonvision");
+
+  private PIDController noteAlignmentController = new PIDController(
+      DrivetrainConstants.rotationKP, 
+      0.0, 
+      DrivetrainConstants.rotationKD
+  );
 
   private final SwerveDrivePoseEstimator poseEstimator;
 
@@ -223,6 +237,23 @@ public class Drivetrain extends SubsystemBase {
     }
     return drivetrainKinematics.toChassisSpeeds(positions);
   }
+
+  
+  public double getNoteAlignment() {
+    PhotonPipelineResult result = driverCamera.getLatestResult();
+    PhotonTrackedTarget target = result.getBestTarget();
+
+    if (target == null) {
+      return 0.0;
+    }
+      
+    return target.getYaw();
+  }
+
+  public double getNoteAlignmentDrivetrainOutput() {
+    return noteAlignmentController.calculate(0, getNoteAlignment());
+  }
+
 
   /**
    * Resets the drivetrain pose estimator to the given pose.
