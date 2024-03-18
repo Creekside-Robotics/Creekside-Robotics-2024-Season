@@ -19,7 +19,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.composite.PrepShot;
 import frc.robot.commands.composite.ShootNote;
 import frc.robot.commands.drivetrain.DriveToAmp;
-import frc.robot.commands.drivetrain.DriveToNote;
+import frc.robot.commands.drivetrain.DriveToNotePhoton;
 import frc.robot.commands.drivetrain.DriveToPickup;
 import frc.robot.commands.drivetrain.DriveToShoot;
 import frc.robot.commands.drivetrain.ManualDrive;
@@ -147,7 +147,7 @@ public class RobotContainer {
             new ParallelCommandGroup(
                 new IntakeNote(intake),
                 new SetIntakeTower(elevator, tilt),
-                new DriveToNote(drivetrain)
+                new DriveToNotePhoton(drivetrain)
             )
         );
 

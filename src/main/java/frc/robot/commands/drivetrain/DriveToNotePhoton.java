@@ -9,8 +9,8 @@ import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.subsystems.Drivetrain;
 
 /** Add your docs here. */
-public class DriveToNote extends SetDrivetrainOutput{
-    public DriveToNote(Drivetrain drivetrain) {
+public class DriveToNotePhoton extends SetDrivetrainOutput{
+    public DriveToNotePhoton(Drivetrain drivetrain) {
         super(
             drivetrain,
             () -> new ChassisSpeeds(
