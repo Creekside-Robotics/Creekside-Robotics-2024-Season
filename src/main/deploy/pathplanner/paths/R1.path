@@ -3,32 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4032384462873189,
-        "y": 5.524739769858686
+        "x": 0.7193498096269378,
+        "y": 6.71763228238236
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.403238446287319,
-        "y": 5.524739769858686
+        "x": 1.2748661086294606,
+        "y": 7.273148581384882
       },
       "isLocked": false,
-      "linkedName": "Center Start"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.871963279471583,
-        "y": 5.553919733431884
+        "x": 2.9105529890257786,
+        "y": 6.985103093013204
       },
       "prevControl": {
-        "x": 1.8719632794715828,
-        "y": 5.553919733431884
+        "x": 2.025841846169909,
+        "y": 6.882229704309032
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Note2"
+      "linkedName": "Note3"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -43,10 +49,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Center Paths",
-  "previewStartingState": {
-    "rotation": 0,
-    "velocity": 0
-  },
+  "folder": null,
+  "previewStartingState": null,
   "useDefaultConstraints": true
 }

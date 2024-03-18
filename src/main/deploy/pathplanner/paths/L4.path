@@ -81,10 +81,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Left Paths",
-  "previewStartingState": {
-    "rotation": -59.981632572390886,
-    "velocity": 0
-  },
+  "folder": null,
+  "previewStartingState": null,
   "useDefaultConstraints": true
 }
