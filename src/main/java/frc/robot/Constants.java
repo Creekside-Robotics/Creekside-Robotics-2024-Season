@@ -165,7 +165,7 @@ public final class Constants {
     public static double idleVoltage = 4.0;
     public static double shootingVoltage = 10.0;
 
-    public static double revtime = 2.0;
+    public static double revtime = 1.5;
 
     public static int currentLimit = 20;
   }
