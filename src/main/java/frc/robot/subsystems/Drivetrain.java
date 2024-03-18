@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.utils.LimelightHelpers;
+import frc.robot.utils.RotationSupplier;
 import frc.robot.utils.LimelightHelpers.LimelightResults;
 import frc.robot.Constants.DeviceIds;
 
@@ -16,6 +17,7 @@ import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -38,6 +40,8 @@ public class Drivetrain extends SubsystemBase {
       new Translation2d(-DrivetrainConstants.trackWidthLength / 2.0, DrivetrainConstants.wheelBaseLength / 2.0),
       new Translation2d(-DrivetrainConstants.trackWidthLength / 2.0, -DrivetrainConstants.wheelBaseLength / 2.0));
 
+  private PIDController rotationController = new PIDController(DrivetrainConstants.rotationKP, 0.0, DrivetrainConstants.rotationKD);
+
   private MkModuleConfiguration swerveModuleConfig;
 
   private SwerveModule frontLeft;
@@ -48,6 +52,8 @@ public class Drivetrain extends SubsystemBase {
   private final ADIS16448_IMU gyro = new ADIS16448_IMU();
 
   private final SwerveDrivePoseEstimator poseEstimator;
+  
+  public final RotationSupplier rotationSupplier = new RotationSupplier();
 
   private final Field2d field2d = new Field2d();
 
@@ -231,6 +237,14 @@ public class Drivetrain extends SubsystemBase {
    */
   public void setDrivetrainPose(Pose2d pose) {
     this.poseEstimator.resetPosition(getGyroRotation(), getModulePositions(), pose);
+  }
+
+  public double getNoteRotation() {
+    return this.rotationSupplier.getValue();
+  }
+
+  public double getNoteRotationDrivetrainOutput() {
+    return rotationController.calculate(0, this.getNoteRotation());
   }
 
   /**
