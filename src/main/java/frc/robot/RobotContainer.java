@@ -43,7 +43,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilt;
 import frc.robot.subsystems.Climber;
 import frc.robot.utils.DriverController;
-import frc.robot.utils.RotationSupplier;
 import frc.robot.utils.ShooterCalculator;
 
 /**
@@ -68,7 +67,6 @@ public class RobotContainer {
     private final DriverController alternateController = new DriverController(Constants.DeviceIds.alternateController);
 
     private final ShooterCalculator shooterCalculator = new ShooterCalculator(drivetrain);
-    private final RotationSupplier rotationSupplier = new RotationSupplier();
 
     private SendableChooser<Command> commandChooser;
 
@@ -103,6 +101,7 @@ public class RobotContainer {
     );
 
     NamedCommands.registerCommand("Prep", new RevPrepShot(elevator, tilt, shooter, shooterCalculator));
+    NamedCommands.registerCommand("Intake", new IntakeGroundAuto(drivetrain, intake));
     NamedCommands.registerCommand("Intermediate", new AutoCycle(elevator, tilt, shooter, intake, shooterCalculator));
     NamedCommands.registerCommand("Shoot", new ShootNote(shooter, intake));
     NamedCommands.registerCommand("PrepNoTime", new PrepShot(shooter, elevator, tilt, shooterCalculator));
@@ -146,7 +145,7 @@ public class RobotContainer {
         );
 
         this.mainController.buttons.get("A").whileTrue(
-            new IntakeGroundAuto(intake, drivetrain, alternateController, rotationSupplier)
+            new IntakeGroundAuto(drivetrain, intake)
         );
 
         this.mainController.buttons.get("A").onFalse(
