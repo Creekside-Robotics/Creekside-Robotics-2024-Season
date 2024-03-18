@@ -5,7 +5,7 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import frc.robot.commands.drivetrain.DriveToNote;
+import frc.robot.commands.drivetrain.DriveToNotePhoton;
 import frc.robot.commands.intake.IntakeNote;
 import frc.robot.commands.tower.SetIntakeTower;
 import frc.robot.subsystems.Drivetrain;
@@ -23,7 +23,7 @@ public class AutoAlignmentIntake extends ParallelDeadlineGroup {
     // addCommands().
     super(
       new IntakeNote(intake),
-      new DriveToNote(drivetrain),
+      new DriveToNotePhoton(drivetrain),
       new SetIntakeTower(elevator, tilt)
     );
     // addCommands(new FooCommand(), new BarCommand());
