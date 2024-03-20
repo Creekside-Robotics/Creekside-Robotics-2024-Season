@@ -134,17 +134,17 @@ public final class Constants {
     public static double lowerLimit = -Math.PI / 3.0;
     public static double upperLimit = Math.PI / 3.0;
 
-    public static double ampAngle = Math.PI / 12.0;
+    public static double ampAngle = 0.0; //Math.PI / 12.0;
     public static double pickupAngle = -0.766;
 
-    public static double hangingAngle = Math.PI / 4.0;
+    public static double hangingAngle = Math.PI / 3.1;
     public static double backlashAngle = 1.0 / 40.0;
 
     public static double pP = 10;
     public static double pI = 0;
     public static double pD = 0.5;
     
-    public static double kS = 4.0;
+    public static double kS = 2.0;
     
     public static double maxVoltage = 8.0;
 
@@ -159,7 +159,7 @@ public final class Constants {
     public static double extendVoltage = 8; /* Figure out optimal voltage */
     public static double retractVoltage = -8; /* Figure out optimal voltage */
     
-    public static int currentLimit = 10; /* Check the limit */
+    public static int currentLimit = 40; /* Check the limit */
 
     public static double positionConversionRate = 0.0022; /* 1/((Counts per revolution * gear ratio)/(pi*pulley diameter) * length of travel) */
   }

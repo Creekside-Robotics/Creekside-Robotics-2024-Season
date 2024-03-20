@@ -21,6 +21,7 @@ import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -57,9 +58,9 @@ public class Drivetrain extends SubsystemBase {
   private PhotonCamera driverCamera = new PhotonCamera("photon");
 
   private PIDController noteAlignmentController = new PIDController(
-      DrivetrainConstants.rotationKP, 
+      DrivetrainConstants.translationKP, 
       0.0, 
-      DrivetrainConstants.rotationKD
+      DrivetrainConstants.translationKD
   );
 
   private final SwerveDrivePoseEstimator poseEstimator;
@@ -249,7 +250,7 @@ public class Drivetrain extends SubsystemBase {
       return 0.0;
     }
       
-    return - target.getYaw() / 360.0;
+    return Math.sin(Math.toRadians(-target.getYaw())) / 2.0;
   }
 
   public double getNoteAlignmentDrivetrainOutput() {
