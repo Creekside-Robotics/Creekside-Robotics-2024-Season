@@ -134,7 +134,7 @@ public final class Constants {
     public static double lowerLimit = -Math.PI / 3.0;
     public static double upperLimit = Math.PI / 3.0;
 
-    public static double ampAngle = 0.0; //Math.PI / 12.0;
+    public static double ampAngle = Math.PI / 12.0;
     public static double pickupAngle = -0.766;
 
     public static double hangingAngle = Math.PI / 3.1;
