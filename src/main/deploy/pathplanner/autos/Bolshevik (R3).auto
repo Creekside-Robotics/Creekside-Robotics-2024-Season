@@ -6,22 +6,9 @@
     "data": {
       "commands": [
         {
-          "type": "deadline",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "0CS"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "PrepNoTime"
-                }
-              }
-            ]
+            "name": "AutoShoot"
           }
         },
         {
@@ -31,32 +18,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "4FS"
+                  "pathName": "L1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intermediate"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "5FS"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intermediate"
+                  "name": "AutoIntake"
                 }
               }
             ]
@@ -65,7 +33,32 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "AutoShoot"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "L2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
           }
         }
       ]

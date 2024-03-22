@@ -8,7 +8,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Prep"
+            "name": "AutoShoot"
           }
         },
         {
@@ -18,51 +18,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3CS"
+                  "pathName": "C6"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intermediate"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "2CS"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intermediate"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "1CS"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intermediate"
+                  "name": "AutoIntake"
                 }
               }
             ]
@@ -71,7 +33,82 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "AutoShoot"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "C3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "C4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "C5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
           }
         }
       ]
