@@ -8,7 +8,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoShoot"
+            "name": "Prep"
           }
         },
         {
@@ -18,22 +18,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C6"
+                  "pathName": "3CS"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoIntake"
+                  "name": "Intermediate"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
           }
         },
         {
@@ -43,22 +37,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C7"
+                  "pathName": "2CS"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoIntake"
+                  "name": "Intermediate"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
           }
         },
         {
@@ -68,22 +56,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "L2"
+                  "pathName": "1CA"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoIntake"
+                  "name": "Intermediate"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
           }
         }
       ]

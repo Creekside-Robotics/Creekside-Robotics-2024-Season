@@ -39,7 +39,7 @@ public class Tilt extends SubsystemBase {
 
     encoder = motor.getEncoder();
     encoder.setPositionConversionFactor(TiltConstants.conversionFactor);
-    encoder.setPosition(TiltConstants.upperLimit - TiltConstants.backlashAngle);
+    encoder.setPosition(TiltConstants.upperLimit);
 
     tiltController.setTolerance(TiltConstants.tolerance);
     tiltController.setSetpoint(TiltConstants.upperLimit);

@@ -4,15 +4,13 @@
 
 package frc.robot.commands.drivetrain;
 
-import java.util.function.Supplier;
-
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
 
 public class SetDrivetrainOutput extends Command {
   private final Drivetrain drivetrain;
-  private final Supplier<ChassisSpeeds> outputSupplier;
+  private final ChassisSpeeds output;
   private final boolean fieldOriented;
 
   /**
@@ -28,26 +26,7 @@ public class SetDrivetrainOutput extends Command {
    */
   public SetDrivetrainOutput(Drivetrain drivetrain, ChassisSpeeds output, boolean fieldOriented) {
     this.drivetrain = drivetrain;
-    this.outputSupplier = () -> output;
-    this.fieldOriented = fieldOriented;
-    addRequirements(this.drivetrain);
-  }
-
-  /**
-   * Creates a new SetDrivetrain Output Command. The command sets the drivetrain
-   * to the output specified for the duration of the command.
-   * 
-   * @param drivetrain     Drivetrain subsystem that will be controlled.
-   * @param outputSupplier The supplier which provides a ChassisSpeeds object
-   *                       representing the motion vector
-   *                       of the drivetrain.
-   * @param fieldOriented  Wether or not the motion vector is relative to the
-   *                       field. If false, it will be
-   *                       assumed that the vector is realtive to the robot.
-   */
-  public SetDrivetrainOutput(Drivetrain drivetrain, Supplier<ChassisSpeeds> outputSupplier, boolean fieldOriented) {
-    this.drivetrain = drivetrain;
-    this.outputSupplier = outputSupplier;
+    this.output = output;
     this.fieldOriented = fieldOriented;
     addRequirements(this.drivetrain);
   }
@@ -60,7 +39,7 @@ public class SetDrivetrainOutput extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.drivetrain.setDrivetrainOutput(this.outputSupplier.get(), this.fieldOriented);
+    this.drivetrain.setDrivetrainOutput(this.output, this.fieldOriented);
   }
 
   // Called once the command ends or is interrupted.

@@ -5,25 +5,32 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.composite.PrepShot;
+import frc.robot.commands.composite.ShootNote;
 import frc.robot.commands.intake.IntakeNote;
 import frc.robot.commands.tower.SetIntakeTower;
-import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilt;
+import frc.robot.utils.ShooterCalculator;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoIntake extends ParallelDeadlineGroup {
-  /** Creates a new AutoAlignmentIntake. */
-  public AutoIntake(Drivetrain drivetrain, Intake intake, Elevator elevator, Tilt tilt) {
-    // Add the deadline command in the super() call. Add other commands using
-    // addCommands().
-    super(
-      new IntakeNote(intake),
-      new SetIntakeTower(elevator, tilt)
-    );
+public class AutoCycle extends SequentialCommandGroup {
+  /** Creates a new AutoCycle. */
+  public AutoCycle(Elevator elevator, Tilt tilt, Shooter shooter, Intake intake, ShooterCalculator shooterCalculator) {
+    // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    addCommands(
+      new ShootNote(shooter, intake),
+      new ParallelDeadlineGroup(
+        new IntakeNote(intake),
+        new SetIntakeTower(elevator, tilt)
+      ),
+      new PrepShot(shooter, elevator, tilt, shooterCalculator)
+    );
   }
 }

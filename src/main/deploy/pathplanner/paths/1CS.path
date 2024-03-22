@@ -3,59 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.581358145172431,
-        "y": 4.0943608704260015
+        "x": 1.5212676579199327,
+        "y": 5.525487974052871
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2418759624486673,
-        "y": 4.351544342186429
-      },
-      "isLocked": false,
-      "linkedName": "Note1"
-    },
-    {
-      "anchor": {
-        "x": 2.097853218262828,
-        "y": 4.907060641188951
-      },
-      "prevControl": {
-        "x": 2.0881265637384288,
-        "y": 4.498541151164189
-      },
-      "nextControl": {
-        "x": 2.1104875851031566,
-        "y": 5.437704048482748
+        "x": 1.6074981912997,
+        "y": 7.129637766384538
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.871963279471583,
-        "y": 5.553919733431884
+        "x": 2.8914165885203804,
+        "y": 7.00319125756735
       },
       "prevControl": {
-        "x": 2.560783467431597,
-        "y": 5.503726295673142
+        "x": -0.5849553915659071,
+        "y": 7.0593533348912425
+      },
+      "nextControl": {
+        "x": 3.7300553327338317,
+        "y": 6.989642737941392
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.096539731541003,
+        "y": 5.525487974052871
+      },
+      "prevControl": {
+        "x": 4.086672788730195,
+        "y": 6.196440085187864
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Note2"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 32.51392198259676,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 2.25,
+    "maxAcceleration": 2.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

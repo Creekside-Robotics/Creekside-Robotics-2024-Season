@@ -8,7 +8,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoShoot"
+            "name": "Prep"
           }
         },
         {
@@ -18,22 +18,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C1"
+                  "pathName": "3CS"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoIntake"
+                  "name": "Intermediate"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
           }
         },
         {
@@ -43,22 +37,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C2"
+                  "pathName": "2CS"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoIntake"
+                  "name": "Intermediate"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
           }
         },
         {
@@ -68,22 +56,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C3"
+                  "pathName": "1CS"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoIntake"
+                  "name": "Intermediate"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
           }
         },
         {
@@ -93,47 +75,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C4"
+                  "pathName": "1FA"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutoIntake"
+                  "name": "Intermediate"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "C5"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
           }
         }
       ]

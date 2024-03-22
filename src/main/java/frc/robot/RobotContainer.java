@@ -19,7 +19,6 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.composite.PrepShot;
 import frc.robot.commands.composite.ShootNote;
 import frc.robot.commands.drivetrain.DriveToAmp;
-import frc.robot.commands.drivetrain.DriveToNotePhoton;
 import frc.robot.commands.drivetrain.DriveToPickup;
 import frc.robot.commands.drivetrain.DriveToShoot;
 import frc.robot.commands.drivetrain.ManualDrive;
@@ -32,9 +31,8 @@ import frc.robot.commands.tower.RetractTower;
 import frc.robot.commands.tower.SetAmpTower;
 import frc.robot.commands.tower.SetIntakeTower;
 import frc.robot.commands.tower.SetPickupTower;
-import frc.robot.commands.auto.AutoAlignmentIntake;
-import frc.robot.commands.auto.AutoIntake;
-import frc.robot.commands.auto.AutoShoot;
+import frc.robot.commands.auto.AutoCycle;
+import frc.robot.commands.auto.RevPrepShot;
 import frc.robot.commands.climber.ExtendArms;
 import frc.robot.commands.climber.RetractArms;
 import frc.robot.subsystems.Drivetrain;
@@ -99,14 +97,15 @@ public class RobotContainer {
               return false;
             },
             drivetrain // Reference to this subsystem to set requirements
-        );
+    );
 
-        NamedCommands.registerCommand("AutoIntake", new AutoIntake(drivetrain, intake, elevator, tilt));
-        NamedCommands.registerCommand("AutoAlignmentIntake", new AutoAlignmentIntake(drivetrain, intake, elevator, tilt));
-        NamedCommands.registerCommand("AutoShoot", new AutoShoot(elevator, tilt, shooter, intake, drivetrain, alternateController, shooterCalculator));
-        
-        this.commandChooser = AutoBuilder.buildAutoChooser();
-        SmartDashboard.putData("Auto Chooser", this.commandChooser);
+    NamedCommands.registerCommand("Prep", new RevPrepShot(elevator, tilt, shooter, shooterCalculator));
+    NamedCommands.registerCommand("Intermediate", new AutoCycle(elevator, tilt, shooter, intake, shooterCalculator));
+    NamedCommands.registerCommand("Shoot", new ShootNote(shooter, intake));
+    NamedCommands .registerCommand("PrepNoTime", new PrepShot(shooter, elevator, tilt, shooterCalculator));
+    
+    this.commandChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", this.commandChooser);
     }
 
     /**
@@ -146,8 +145,7 @@ public class RobotContainer {
         this.mainController.buttons.get("A").whileTrue(
             new ParallelCommandGroup(
                 new IntakeNote(intake),
-                new SetIntakeTower(elevator, tilt),
-                new DriveToNotePhoton(drivetrain)
+                new SetIntakeTower(elevator, tilt)
             )
         );
 
