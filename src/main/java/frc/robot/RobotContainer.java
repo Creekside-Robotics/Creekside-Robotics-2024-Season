@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -74,6 +75,7 @@ public class RobotContainer {
      */
     public RobotContainer() {
         // Configure the button bindings
+        SignalLogger.enableAutoLogging(false);
         configureButtonBindings();
         configureAutoCommands();
     }
