@@ -96,6 +96,8 @@ public final class Constants {
     public static double frontRightEncoderOffset = Math.toRadians(-180.703) + Math.PI / 2.0;
     public static double backLeftEncoderOffset = Math.toRadians(-80.069 + 17.5) - Math.PI / 2.0;
     public static double backRightEncoderOffset = Math.toRadians(-88.330) + Math.PI / 2.0;
+    
+    public static double autoIntakeSpeed = 1.5;
 
     public static Vector<N3> stateStandardDeviation = VecBuilder.fill(0.01, 0.01, 0.02);
     public static Vector<N3> visionStandardDeviation = VecBuilder.fill(0.5, 0.5, 1.0);
@@ -176,6 +178,7 @@ public final class Constants {
 
     public static double shootTime = 0.5;
     public static double ampTime = 1.0;
+    public static double autoIntakeTime = 2.0;
 
     public static int currentLimit = 10;
 
